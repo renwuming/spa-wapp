@@ -1,0 +1,333 @@
+<style lang="less">
+  .container {
+    width: 100%;
+    font-size: 20rpx;
+    background: #f5f5f5;
+    font-weight: 500;
+    margin-bottom: 110rpx;
+    .imgbg {
+      width: 100%;
+    }
+    .tips {
+      width: 100%;
+      height: 170rpx;
+      padding: 27rpx 15rpx 10rpx 15rpx;
+      box-sizing: border-box;
+      background: white;
+      .proname {
+        color: #4c4c4c;
+        font-size: 28rpx;
+      }
+      .bt {
+        margin-top: 60rpx;
+        display: flex;
+        font-size: 21rpx;
+        .price-block {
+          color: #ec242c;
+        }
+        .number {
+          font-size: 28rpx;
+        }
+      }
+      .info {
+        flex:1;
+        text-align: right;
+        color: #969696;
+      }
+    }
+    .yh, .bz{
+      border-top: 1px solid #e5e5e5;
+      width: 100%;
+      background: white;
+      height: 70rpx;
+      line-height: 70rpx;
+      padding: 0 20rpx;
+      box-sizing: border-box;
+      .icon {
+        float: right;
+      }
+    }
+    .fusj {
+      margin: 18rpx auto;
+      font-weight: 500;
+      background: white;
+      width: 100%;
+      display: flex;
+      padding: 0rpx 15rpx;
+      box-sizing: border-box;
+      height: 70rpx;
+      line-height: 70rpx;
+      font-size: 22rpx;
+      .section {
+        flex: 1;
+      }
+      .section1 {
+        text-align: center;
+      }
+      .picker {
+        color: #ec242c;
+      }
+    }
+    .serverinfo {
+      margin-bottom: 18rpx;
+      padding-left: 15rpx;
+      padding-right: 10rpx;
+      box-sizing: border-box;
+      color: #4c4c4c;
+      width: 100%;
+      font-size: 22rpx;
+      background: white;
+      .info1 {
+        margin: 15rpx auto;
+      }
+      .big{
+        margin-top: 55rpx;
+      }
+      .detail { 
+        line-height: 30rpx;
+      }
+    }
+  }
+  .buy {
+    position: fixed;
+    bottom: 0;
+    height: 100rpx;
+    line-height: 100rpx;
+    width: 100%;
+    color: white;
+    background: #e94840;
+    border-radius: 0;
+    font-size: 35rpx;
+  }
+  .purchase {
+    background: white;
+    font-size: 22rpx;
+    color: #4c4c4c;
+    .title {
+      padding: 25rpx 15rpx;
+      border-bottom: 1px solid #e4e4e4;
+    }
+    .item {
+      box-sizing: border-box;
+      padding-left: 15rpx;
+      padding-right: 10rpx;
+      margin-top: 10rpx;
+      display: inline-block;
+      line-height: 40rpx;
+    }
+  }
+</style>
+
+<template>
+  <view class="container">
+    <image class="imgbg" src="{{objonfo.showImg}}" mode="widthFix"></image> 
+
+    <view class="tips">
+      <text class="proname">{{objonfo.title}}</text>
+      <view class="bt">
+        <view class="price-block">
+          <text class="number">{{objonfo.price}}</text>元/次
+        </view>
+        <text class="info">已售{{objonfo.orderCount}}单</text>
+      </view>
+    </view>
+
+    <view class="yh" @tap="gotoPrice">
+      会员 充事实上董是生生世世
+      <wxc-icon size="25" class="icon right" type="arrow-right"></wxc-icon>
+    </view>
+
+    <view class="bz">
+      保障 无额外收费 爽约包赔 不满意重服务
+    </view>
+    <!-- 服务时间 -->
+    <view class="fusj">
+        <view class="title section">服务时间</view>
+
+        <view class="section section1">
+            <picker mode="date" value="{{date}}" start="{{startDate}}" end="{{endDate}}" bindchange="bindDateChange">
+                <view class="picker">
+                  {{date}}
+                </view>
+            </picker>
+        </view>        
+
+        <view class="section section1">
+            <picker mode="time" value="{{time}}" start="{{startTime}}" end="{{endTime}}" bindchange="bindTimeChange">
+                <view class="picker">
+                  {{time}}
+                </view>
+            </picker>
+        </view>
+    </view>
+    <!-- 服务说明 -->
+    <view class="serverinfo">
+      <view class="info1">服务时长: {{objonfo.serviceTime}}</view>
+      <view class="info1">服务姿势:{{objonfo.serviceStatus}}</view>
+      <view class="info1 big">
+        适用人群:
+        <view class="detail">{{objonfo.fixPersion}}</view>
+      </view>
+      <view class="info1 big">
+        不宜人群:
+        <view class="detail">{{objonfo.unfixPersion}}</view>
+      </view>
+      <view class="info1 big">
+        项目介绍:
+        <view class="detail">{{objonfo.producInfo}}</view>
+      </view>
+      <view class="info1 big">
+        服务流程:
+        <view class="detail">{{objonfo.serviceProcress}}</view>
+      </view>
+      <view class="info1 big">
+        用品提供:
+        <view class="detail">{{objonfo.need}}</view>
+      </view>
+    </view>
+    <!-- 订购须知 -->
+    <view class="purchase">
+      <view class="title">订购须知</view>
+      <text class="item">1. 本店严格拒绝一切形式的非正规服务，举报有奖</text>
+      <text class="item">2. 订单确认后，修改订单或退款需提前2小时通知</text>
+      <text class="item">3. 预约时间前2小时内退单将按30元/人口去空单费</text>
+      <text class="item">4. 如商家接单后爽约将全额退款并向您额外赔付30元</text>
+      <text class="item">5. 为保障您的权益，所有费用请通过本平台支付</text>
+      <text class="item">6. 本店24小时上门服务，但因夜间交通不便，晚21:00 ～ 早07:00间服务的订单，需另行向技师支付往返打车费用（往返共不超过100元）</text>
+    </view>
+    <button class="buy" @tap="buyfunc">立即购买</button>  
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import order from '../api/order'
+  import user from '../api/user'
+  import goods from '../api/goods'
+  import domTool from '../utils/domTool'
+
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: '服务详情',
+      usingComponents: {
+        'wxc-toast': '../../packages/@minui/wxc-toast/dist/index',
+        'wxc-icon': '../../packages/@minui/wxc-icon/dist/index',
+        'wxc-badge': '../../packages/@minui/wxc-badge/dist/index'
+      }
+    }
+
+    components = {
+
+    }
+
+    data = {
+      date: '选择日期',
+      time: '选择时间',
+      startTime: '',
+      objonfo: {}
+    }
+
+    computed = {
+      startDate () {
+        var std = new Date()
+        var h = std.getHours()
+        if (h >= 23) {
+          std.setDate(std.getDate() + 1)
+        }
+        return std.toLocaleDateString().split('/').map(i => Number(i) < 10 ? '0' + i : i).join('-')
+      },
+      endDate () {
+        var std = new Date()
+        std.setDate(std.getDate() + 30)
+        return std.toLocaleDateString().split('/').map(i => Number(i) < 10 ? '0' + i : i).join('-')
+      },
+      endTime() {
+        return '23:00'
+      }
+    }
+
+    watch = {
+      date (n, o) {
+        // console.log(n, o)
+        var res = ''
+        var temp = new Date()
+        var h = temp.getHours()
+        var m = temp.getMinutes()
+        var today = temp.toLocaleDateString().split('/').map(i => Number(i) < 10 ? '0' + i : i).join('-')
+        // console.log(today, n)
+        if (h >= 9 && h < 23 && today === n) {
+          res = h + ':' + m
+        } else {
+          res = '07:00'
+        }
+        this.startTime = res
+      }
+    }
+
+    methods = {
+      async buyfunc () {
+        if(!wepy.getStorageSync('city')) {
+          domTool.action('您不在北京，无法购买！')
+          return 
+        }
+        // 判断有没有填写信息
+        if(this.date === '选择日期' || this.time === '选择时间'){
+          domTool.action('请选择时间！')
+          return 
+        }
+
+        if(!wepy.getStorageSync('address').trim() || !wepy.getStorageSync('name').trim() || !wepy.getStorageSync('phoneNumber').trim()) {
+          domTool.action('请填写个人信息')
+          this.$navigate('userInfo', {})
+          return  
+        }
+        
+        let resdata = await order.createOrder({
+          orderTime: '日期：'+ this.date +'，时间：'+this.time,
+          createTime: new Date().toLocaleString(),
+          orderStatus: false,
+          server: this.objonfo.title,
+          price: this.objonfo.price,
+          name: wepy.getStorageSync('name'),
+          phoneNumber: wepy.getStorageSync('phoneNumber'),
+          address: wepy.getStorageSync('address')
+        })
+        
+        let goodres = await goods.updateGood({
+          _id: this.objonfo._id
+        })
+        if(resdata === 'success!' && goodres.ok === 1) {
+          domTool.success('购买成功')
+          return 
+        }
+      },
+      bindDateChange (e) {
+        this.date = e.detail.value
+      },
+      bindTimeChange (e) {
+        this.time = e.detail.value
+      },
+      gotoPrice () {
+        this.$navigate('money', {})
+      }
+    }
+
+    events = {
+
+    }
+
+    getData() {
+      var params = this.$wxpage.options
+      this.objonfo = wepy.getStorageSync('goodList')[params.id]
+    }
+
+    onLoad() {
+      this.getData()
+    }
+
+    onShow () {
+      this.getData()
+    }
+    
+  }
+</script>

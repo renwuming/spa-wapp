@@ -1,0 +1,88 @@
+<style lang="scss" src="./styles/app.scss"></style>
+
+<script>
+import wepy from 'wepy';
+import WxUtils from './utils/wx-utils';
+import 'wepy-async-function';
+import { setStore } from 'wepy-redux';
+import configStore from './store';
+
+const store = configStore();
+setStore(store);
+
+export default class extends wepy.app {
+  config = {
+    pages: [
+      'pages/index',
+      'pages/shop',
+      'pages/userInfo',
+      'pages/money',
+      'pages/order',
+      'pages/detail'
+    ],
+    window: {
+      backgroundTextStyle: 'light',
+      navigationBarBackgroundColor: '#f8a78e',
+      navigationBarTitleText: 'WeChat',
+      navigationBarTextStyle: 'black'
+    },
+    tabBar: {
+      borderStyle: 'black',
+      list: [
+        {
+          pagePath: 'pages/shop',
+          text: '商家服务'
+        },
+        {
+          pagePath: 'pages/index',
+          text: '个人中心'
+        }
+      ]
+    }
+  };
+
+  globalData = {
+    UserInfo: {},
+    baseUrl: 'http://169.254.219.25:3000'
+  };
+
+  constructor() {
+    super();
+    this.use('requestfix');
+    this.use('promisify');
+    this.intercept('request', {
+      config(p) {
+        // console.log('拦截成功！', this.createAuthHeader())
+        p.header = this.createAuthHeader();
+        return p;
+      }
+    });
+  }
+
+  createAuthHeader() {
+    const session = wepy.getStorageSync('thirdSession');
+    const header = {};
+    if (session) {
+      header['session'] = session;
+    }
+    return header;
+  }
+
+  onLaunch() {
+    WxUtils.checkSDK();
+    this.syncStoreConfig();
+  }
+
+  syncStoreConfig() {
+    try {
+      const value = wepy.getStorageSync('UserInfo');
+      if (value !== '') {
+        console.log(`autykey: UserInfo success`);
+        wepy.$instance.globalData.UserInfo = value;
+      }
+    } catch (e) {
+      console.warn(`authkey: UserInfo fail`);
+    }
+  }
+}
+</script>

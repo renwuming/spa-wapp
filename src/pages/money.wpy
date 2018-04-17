@@ -1,0 +1,148 @@
+<style lang="less">
+    .zan-btn {
+        position: relative;
+        color: #333;
+        background-color: #fff;
+        margin-bottom: 10px;
+        padding-left: 15px;
+        padding-right: 15px;
+        border-radius: 2px;
+        font-size: 16px;
+        line-height: 45px;
+        height: 45px;
+        box-sizing: border-box;
+        text-decoration: none;
+        text-align: center;
+        vertical-align: middle;
+        width: 96%;
+    }
+    .zan-btn::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 200%;
+        height: 200%;
+        transform: scale(.5);
+        transform-origin: 0 0;
+        pointer-events: none;
+        box-sizing: border-box;
+        border: 0 solid #e5e5e5;
+        border-width: 1px;
+        border-radius: 4px
+    }
+    .zan-btn--primary {
+        color: #fff;
+        background-color: #4b0
+    }
+    .zan-btn--primary::after {
+        border-color: #0a0
+    }
+    .button-hover {
+        opacity: .9
+    }
+    .zan-btn--loading::before {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        content: ' ';
+        width: 16px;
+        height: 16px;
+        margin-left: -8px;
+        margin-top: -8px;
+        border: 3px solid #e5e5e5;
+        border-color: #666 #e5e5e5 #e5e5e5 #e5e5e5;
+        border-radius: 8px;
+        box-sizing: border-box;
+        animation: btn-spin .6s linear;
+        animation-iteration-count: infinite
+    }
+    .box {
+        width: 100%;
+        height: 350rpx;
+        background: #00abef;
+        font-size: 60rpx;
+        line-height: 300rpx;
+        text-align: center;
+        color: white;
+        margin-bottom: 50rpx;
+    }
+  .userinfo {
+    position: absolute;
+    top: 20rpx;
+    left: 20rpx;
+  }
+  .userinfo-avatar {
+    width: 160rpx;
+    height: 160rpx;
+    border-radius: 50%;
+    border: 1px solid #e4e4e4;
+  }
+  .userinfo-nickname {
+    margin-top: 5rpx;
+    color: #5e5e5e;
+  }
+</style>
+
+<template>
+  <view class="container">
+     <view class="box">
+        <view class="ye-text">您的余额 {{ye}}</view>    
+     </view>  
+     <button class="zan-btn zan-btn--primary">充值2000送500</button>
+     <button class="zan-btn zan-btn--primary">充值3000送200</button>
+     <button class="zan-btn zan-btn--primary">充值任意金额</button>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: '我的余额'
+    }
+
+    components = {
+
+    }
+
+    data = {
+      userInfo: '',
+      ye: ''
+    }
+
+    computed = {
+
+    }
+
+    methods = {
+
+    }
+
+    events = {
+
+    }
+
+    getData() {
+      this.ye = wepy.getStorageSync('ye')
+    }
+
+    onLoad() {
+      let self = this
+      wepy.setNavigationBarColor({
+        frontColor: '#ffffff',
+        backgroundColor: '#00abef',
+        animation: {
+          duration: 400,
+          timingFunc: 'easeIn'
+        }
+      })
+      this.getData()
+    }
+
+    onShow () {
+      this.getData()
+    }
+  }
+</script>
