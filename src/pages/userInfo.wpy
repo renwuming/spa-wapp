@@ -100,6 +100,10 @@
       
        if(res.ok===1) {
          domTool.success('修改成功！')
+         //$switch(url:String|Object)
+         setTimeout(()=>{
+           this.$switch('index', {})
+         },400)
        }
       },
       formReset: function() {
@@ -119,14 +123,14 @@
     }
 
     onLoad() {
-      wepy.setNavigationBarColor({
-        frontColor: '#ffffff',
-        backgroundColor: '#00abef',
-        animation: {
-          duration: 400,
-          timingFunc: 'easeIn'
-        }
-      })
+      // wepy.setNavigationBarColor({
+      //   frontColor: '#ffffff',
+      //   backgroundColor: '#00abef',
+      //   animation: {
+      //     duration: 400,
+      //     timingFunc: 'easeIn'
+      //   }
+      // })
       this.getData()
     }
 

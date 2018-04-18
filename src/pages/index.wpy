@@ -50,7 +50,6 @@
     }
     .icon {
       float: right;
-      color: #5e5e5e;
     }
     .btn {
       appearance: none;
@@ -87,25 +86,25 @@
       <view class="item" @tap="gotoNewOrder">
         <text class="txt">我的预约</text>
         <wxc-badge class="count" wx:if="{{orderCount.unused != 0}}">{{orderCount.unused}}</wxc-badge>
-        <wxc-icon size="25" class="icon" type="arrow-right"></wxc-icon>
+        <wxc-icon size="25" class="icon" type="arrow-right" color="#5e5e5e"></wxc-icon>
       </view>
       <view class="item" @tap="gotoNewMoney">
         <text class="txt">我的余额</text>
-        <wxc-icon size="25" class="icon" type="arrow-right"></wxc-icon>
+        <wxc-icon size="25" class="icon" type="arrow-right" color="#5e5e5e"></wxc-icon>
       </view>
       <view class="item" @tap="gotoNewPage">
         <text class="txt">绑定个人信息</text>
-        <wxc-icon size="25" class="icon" type="arrow-right"></wxc-icon>
+        <wxc-icon size="25" class="icon" type="arrow-right" color="#5e5e5e"></wxc-icon>
       </view>
       <view class="item" hover-class="activeBtn">
         <button open-type="contact" class="btn">
           <text class="txt">客服对话</text>
-          <wxc-icon size="25" class="icon" type="arrow-right"></wxc-icon>
+          <wxc-icon size="25" class="icon" type="arrow-right" color="#5e5e5e"></wxc-icon>
         </button>
       </view>
       <view class="item" @tap="makePhone">
         <text class="txt">客服热线</text>
-        <wxc-icon size="25" class="icon" type="arrow-right"></wxc-icon>
+        <wxc-icon size="25" class="icon" type="arrow-right" color="#5e5e5e"></wxc-icon>
       </view>
     </view>
 
@@ -198,37 +197,41 @@
       const result = await auth.user();
       // 登陆成功
       if (result) {
-        // console.log('mingling')
-        this.userInfo = wepy.$instance.globalData.UserInfo.userInfo
-        this.$apply();
-        let res = await user.getUserInfo()
-        if(!res.address || !res.name || !res.phoneNumber) {
-          let bool = domTool.modal('请填写姓名地址和电话，方便服务','提示',() => {
-            this.$navigate('userInfo', {})
-          })          
-        }
-        this.setdata(['ye','address','name','phoneNumber'], [res.money, res.address, res.name, res.phoneNumber])
-        // wepy.setStorageSync('ye', res.money)
-        // console.log(res)
-        if (res.success) {
-          //渲染,  把关键数据存入 storage 
-          let orderres = await order.findOrder()
-          this.order = orderres
-          this.orderCount = this.computedOrderCount(orderres)
-          this.$apply();
-
-        } else {
-          await user.addUser({
-            nickName: this.userInfo.nickName,
-            name: '',
-            money: 0,
-            phoneNumber: '',
-            address: '',
-            orderCount: 0
-          })
-        }
-        return;
+        this.relData()
       }
+    }
+
+    async relData() {
+      // console.log('mingling')
+      this.userInfo = wepy.$instance.globalData.UserInfo.userInfo
+      this.$apply();
+      let res = await user.getUserInfo()
+      if(!res.address || !res.name || !res.phoneNumber) {
+        let bool = domTool.modal('请绑定个人信息，方便服务','提示',() => {
+          // this.$navigate('userInfo', {})
+        })          
+      }
+      this.setdata(['ye','address','name','phoneNumber'], [res.money, res.address, res.name, res.phoneNumber])
+      // wepy.setStorageSync('ye', res.money)
+      // console.log(res)
+      if (res.success) {
+        //渲染,  把关键数据存入 storage 
+        let orderres = await order.findOrder()
+        this.order = orderres
+        this.orderCount = this.computedOrderCount(orderres)
+        this.$apply();
+
+      } else {
+        await user.addUser({
+          nickName: this.userInfo.nickName,
+          name: '',
+          money: 0,
+          phoneNumber: '',
+          address: '',
+          orderCount: 0
+        })
+      }
+      return;
     }
 
     async onLoad() {
@@ -264,7 +267,6 @@
         // 不允许获取地理位置
         fail: function() {
           domTool.action('不在北京地区的用户无法预约该服务')
-          //console.log('测试提交一个pull request')
           that.getData()
         }
       })
@@ -272,7 +274,7 @@
 
     // 控制一下，unload 和 onshow 不要同时执行
     onShow () {
-      this.getData()
+      this.relData()
     }
 
   }

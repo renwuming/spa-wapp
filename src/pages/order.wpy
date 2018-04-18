@@ -1,16 +1,25 @@
 <style lang="less">
   .container {
     width: 100%;
+    box-sizing: border-box;
+    padding:10rpx 15rpx;
   }
   .item {
     width: 100%;
+    border-radius: 20rpx;
+    box-sizing: border-box;
     color: white;
     margin: 10rpx;
+    padding: 10rpx;
     font-size: 28rpx;
   }
 
+  .ite {
+    line-height: 40rpx;
+  }
+
   .un {
-    background: #42b983;
+    background: #f8a68e;
   }
 
   .co {
