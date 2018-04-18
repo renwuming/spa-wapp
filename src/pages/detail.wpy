@@ -292,14 +292,13 @@
           phoneNumber: wepy.getStorageSync('phoneNumber'),
           address: wepy.getStorageSync('address')
         })
-        
         let goodres = await goods.updateGood({
           _id: this.objonfo._id
         })
-        if(resdata === 'success!' && goodres.ok === 1) {
-          domTool.success('购买成功')
-          return 
+        if(resdata.success) {
+          this.callPay(resdata.jsPay);
         }
+
       },
       bindDateChange (e) {
         this.date = e.detail.value
@@ -310,6 +309,12 @@
       gotoPrice () {
         this.$navigate('money', {})
       }
+    }
+
+    callPay(jsPay) {
+      wx.requestPayment({...jsPay, success: function(errMsg) {
+        console.log(errMsg);
+      }});
     }
 
     events = {
