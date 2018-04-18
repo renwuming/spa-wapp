@@ -318,7 +318,7 @@
     }
 
     callPay(jsPay) {
-      wx.requestPayment({...jsPay, success: function(errMsg) {
+      wx.requestPayment({...jsPay, success: (errMsg) => {
         domTool.success('购买成功')
         setTimeout(()=>{
          this.$switch('index', {})
