@@ -264,6 +264,7 @@
         // 不允许获取地理位置
         fail: function() {
           domTool.action('不在北京地区的用户无法预约该服务')
+          //console.log('测试提交一个pull request')
           that.getData()
         }
       })
