@@ -1,9 +1,9 @@
 <style lang="less">
   .container {
     width: 100%;
-    font-size: 20rpx;
+    font-size: 25rpx;
     background: #f5f5f5;
-    font-weight: 500;
+    font-weight: 600;
     margin-bottom: 110rpx;
     .imgbg {
       width: 100%;
@@ -15,37 +15,41 @@
       box-sizing: border-box;
       background: white;
       .proname {
-        color: #4c4c4c;
-        font-size: 28rpx;
+        color: #515151;
+        font-size: 30rpx;
       }
       .bt {
         margin-top: 60rpx;
         display: flex;
-        font-size: 21rpx;
+        font-size: 25rpx;
         .price-block {
           color: #ec242c;
         }
         .number {
-          font-size: 28rpx;
+          font-size: 30rpx;
         }
       }
       .info {
         flex:1;
         text-align: right;
-        color: #969696;
+        color: #BCBCBC;
       }
     }
     .yh, .bz{
       border-top: 1px solid #e5e5e5;
+      color: #D2D2D2;
       width: 100%;
       background: white;
-      height: 70rpx;
-      line-height: 70rpx;
+      height: 90rpx;
+      line-height: 90rpx;
       padding: 0 20rpx;
       box-sizing: border-box;
       .icon {
         float: right;
       }
+    }
+    .bz { 
+      color: #27C24C;
     }
     .fusj {
       margin: 18rpx auto;
@@ -55,9 +59,9 @@
       display: flex;
       padding: 0rpx 15rpx;
       box-sizing: border-box;
-      height: 70rpx;
-      line-height: 70rpx;
-      font-size: 22rpx;
+      height: 90rpx;
+      line-height: 90rpx;
+      font-size: 25rpx;
       .section {
         flex: 1;
       }
@@ -75,7 +79,7 @@
       box-sizing: border-box;
       color: #4c4c4c;
       width: 100%;
-      font-size: 22rpx;
+      font-size: 25rpx;
       background: white;
       .info1 {
         margin: 15rpx auto;
@@ -101,7 +105,7 @@
   }
   .purchase {
     background: white;
-    font-size: 22rpx;
+    font-size: 25rpx;
     color: #4c4c4c;
     .title {
       padding: 25rpx 15rpx;
@@ -115,6 +119,9 @@
       display: inline-block;
       line-height: 40rpx;
     }
+  }
+  .ok1 {
+    margin: 0 5rpx;
   }
 </style>
 
@@ -138,7 +145,10 @@
     </view>
 
     <view class="bz">
-      保障 无额外收费 爽约包赔 不满意重服务
+      保障
+      <wxc-icon size="28" type="yes" class="ok1" color="#27C24C"></wxc-icon>无额外收费
+      <wxc-icon size="28" type="yes" class="ok1" color="#27C24C"></wxc-icon>爽约包赔
+      <wxc-icon size="28" type="yes" class="ok1" color="#27C24C"></wxc-icon>不满意重服务
     </view>
     <!-- 服务时间 -->
     <view class="fusj">
@@ -164,24 +174,19 @@
     <view class="serverinfo">
       <view class="info1">服务时长: {{objonfo.serviceTime}}</view>
       <view class="info1">服务姿势:{{objonfo.serviceStatus}}</view>
-      <view class="info1 big">
-        适用人群:
+      <view class="info1 big">适用人群:
         <view class="detail">{{objonfo.fixPersion}}</view>
       </view>
-      <view class="info1 big">
-        不宜人群:
+      <view class="info1 big">不宜人群:
         <view class="detail">{{objonfo.unfixPersion}}</view>
       </view>
-      <view class="info1 big">
-        项目介绍:
+      <view class="info1 big">项目介绍:
         <view class="detail">{{objonfo.producInfo}}</view>
       </view>
-      <view class="info1 big">
-        服务流程:
+      <view class="info1 big">服务流程:
         <view class="detail">{{objonfo.serviceProcress}}</view>
       </view>
-      <view class="info1 big">
-        用品提供:
+      <view class="info1 big">用品提供:
         <view class="detail">{{objonfo.need}}</view>
       </view>
     </view>
@@ -231,7 +236,7 @@
       startDate () {
         var std = new Date()
         var h = std.getHours()
-        if (h >= 23) {
+        if (h >= 21) {
           std.setDate(std.getDate() + 1)
         }
         return std.toLocaleDateString().split('/').map(i => Number(i) < 10 ? '0' + i : i).join('-')
@@ -256,7 +261,7 @@
         var today = temp.toLocaleDateString().split('/').map(i => Number(i) < 10 ? '0' + i : i).join('-')
         // console.log(today, n)
         if (h >= 9 && h < 23 && today === n) {
-          res = h + ':' + m
+          res = h+2 + ':' + m
         } else {
           res = '07:00'
         }
@@ -295,6 +300,7 @@
         let goodres = await goods.updateGood({
           _id: this.objonfo._id
         })
+
         if(resdata.success) {
           this.callPay(resdata.jsPay);
         }
@@ -313,7 +319,10 @@
 
     callPay(jsPay) {
       wx.requestPayment({...jsPay, success: function(errMsg) {
-        console.log(errMsg);
+        domTool.success('购买成功')
+        setTimeout(()=>{
+         this.$switch('index', {})
+        },400)
       }});
     }
 
