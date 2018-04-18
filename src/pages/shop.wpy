@@ -35,13 +35,13 @@
       .title {
         margin: 10rpx 0;
         font-weight: bold;
-        color: #5e5e5e;
+        color: #5d5d5d;
         font-size: 25rpx;
       }
       .intro {
         width: 100%;
         margin: 33rpx 0;
-        color: #999;
+        color: #aeaeae;
         font-size: 25rpx;
         overflow: hidden;
         text-overflow:ellipsis;
@@ -60,8 +60,8 @@
       width: 100%;
       border-top: 1px dotted #d0d0d0;
       font-size: 22rpx;
-      font-weight: 300;
-      color: #999;
+      font-weight: 600;
+      color: #959595;
       text-align: right;
       padding-top: 10rpx;
     }
@@ -118,7 +118,7 @@
     }
 
     methods = {
-      gotoDetail(index) {
+      gotoDetail (index) {
         this.$navigate('detail', {id: index})
       }
     }
@@ -127,14 +127,14 @@
 
     }
 
-    async getData() {
+    async getData () {
       let resdata = await goods.getGoodsList()
       wepy.setStorageSync('goodList',resdata)
       this.goodList = resdata
       this.$apply()
     }
 
-    async onLoad() {
+    async onLoad () {
       this.getData()
     }
 
