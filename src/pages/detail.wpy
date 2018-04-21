@@ -359,7 +359,7 @@
     }
 
     onLoad() {
-      this.getData()
+
     }
 
     onShow () {
