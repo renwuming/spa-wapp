@@ -8,17 +8,12 @@ export default class http {
       method: method,
       data: data
     }
-    if (loading) {
-    }
-    console.info(param)
+    console.log(wepy.request)
+    console.log('最新数据', param)
     const res = await wepy.request(param)
     console.log('get', res)
     return res.data
-    // if (this.isSuccess(res)) {
-    //   return res.data.data
-    // } else {
-    //   throw this.requestException(res)
-    // }
+
   }
 
   static isSuccess (res) {

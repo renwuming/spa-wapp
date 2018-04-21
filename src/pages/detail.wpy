@@ -354,7 +354,7 @@
     }
 
     onLoad() {
-      this.getData()
+
     }
 
     onShow () {
