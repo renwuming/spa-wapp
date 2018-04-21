@@ -74,7 +74,7 @@
     <view class="top">
       <image src="../images/bg.png" background-size="cover" class="bg"/>
       <view class="userinfo">
-        <image class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover"/>
+        <image class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" mode="aspectFill"/>
         <view class="userinfo-nickname">
           <text class="welcome"> hi </text>,
           {{ userInfo.nickName }}

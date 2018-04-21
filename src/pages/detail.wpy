@@ -147,7 +147,7 @@
 
     <view class="yh" @tap="gotoPrice">
       <view class="bor">
-        会员 充500送100 充1000送300 充2000送800
+        会员 充值优惠
         <wxc-icon size="25" class="icon right" type="arrow-right" color="#c6c6c6"></wxc-icon>
       </view>
     </view>
