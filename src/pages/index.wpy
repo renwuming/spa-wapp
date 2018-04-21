@@ -170,7 +170,6 @@
 
     setdata(arr1,arr2) {
       arr1.forEach((item,index)=>{
-        // console.log(item,arr2[index])
         wepy.setStorageSync(item, arr2[index])
       })
     }
@@ -179,7 +178,6 @@
       var unused = 0;
       var used = 0;
       var total = arr.length;
-      // console.log('adsafasf',arr)
       arr.forEach(item=>{
         if(!item.orderStatus) {
           unused++;
@@ -187,7 +185,6 @@
           used++;
         }
       })
-      // console.log('total',total)
       return {unused,total}
     } 
 
@@ -195,9 +192,12 @@
     async getData() {
       // 校验是否登录成功
       const result = await auth.user();
+      // console.log('result', result)
       // 登陆成功
       if (result) {
         this.relData()
+      } else {
+        domTool.error('登录失败！')
       }
     }
 
@@ -237,6 +237,8 @@
     async onLoad() {
       // 获取地理位置
       var that = this
+
+      that.getData()  
       // 实例化腾讯地图API核心类
       var qqmapsdk = new QQMapWX({
         key: 'NZRBZ-AHMKJ-VVKFU-KCD7L-YSZEV-7KBR6' // 必填
@@ -274,7 +276,7 @@
 
     // 控制一下，unload 和 onshow 不要同时执行
     onShow () {
-      this.relData()
+      this.getData()
     }
 
   }

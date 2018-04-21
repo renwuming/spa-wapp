@@ -210,6 +210,7 @@
   import user from '../api/user'
   import goods from '../api/goods'
   import domTool from '../utils/domTool'
+  import auth from '../api/auth'
 
   export default class Index extends wepy.page {
     config = {
@@ -297,13 +298,23 @@
           phoneNumber: wepy.getStorageSync('phoneNumber'),
           address: wepy.getStorageSync('address')
         })
-        let goodres = await goods.updateGood({
-          _id: this.objonfo._id
-        })
+
 
         if(resdata.success) {
+
+          let goodres = await goods.updateGood({
+            _id: this.objonfo._id
+          })
+
           this.callPay(resdata.jsPay);
+        } else if(resdata.errMsg) {
+
+          await auth.doLogin()
+          domTool.action('登录失效，请重新加载该页面')
+          
         }
+
+
 
       },
       bindDateChange (e) {

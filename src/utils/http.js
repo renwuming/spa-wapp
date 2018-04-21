@@ -10,9 +10,9 @@ export default class http {
     }
     if (loading) {
     }
-    // console.info(`[http]request url=${url}`)
+    console.info(param)
     const res = await wepy.request(param)
-    // console.log(res)
+    console.log('get', res)
     return res.data
     // if (this.isSuccess(res)) {
     //   return res.data.data
@@ -44,6 +44,7 @@ export default class http {
   }
 
   static get (url, data, loading = true) {
+    console.log('getgetgteet')
     return this.request('GET', url, data, loading)
   }
 
