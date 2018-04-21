@@ -192,7 +192,6 @@
     async getData() {
       // 校验是否登录成功
       const result = await auth.user();
-      // console.log('result', result)
       // 登陆成功
       if (result) {
         this.relData()
@@ -235,10 +234,6 @@
     }
 
     async onLoad() {
-      // 获取地理位置
-      var that = this
-
-      that.getData()  
       // 实例化腾讯地图API核心类
       var qqmapsdk = new QQMapWX({
         key: 'NZRBZ-AHMKJ-VVKFU-KCD7L-YSZEV-7KBR6' // 必填
@@ -257,8 +252,7 @@
             success: function (addressRes) {
               var city = addressRes.result.address_component.city;
               if(city === '北京市') {
-                wepy.setStorageSync('city', true)
-                that.getData()                
+                wepy.setStorageSync('city', true)             
               } else {
                 wepy.setStorageSync('city', false)
                 domTool.action('您当前不在北京，无法预约该服务！')
@@ -269,7 +263,6 @@
         // 不允许获取地理位置
         fail: function() {
           domTool.action('不在北京地区的用户无法预约该服务')
-          that.getData()
         }
       })
     }

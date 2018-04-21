@@ -140,7 +140,7 @@
     }
 
     async onLoad () {
-      this.getData()
+
     }
 
     onShow () {

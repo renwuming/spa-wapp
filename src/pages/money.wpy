@@ -155,16 +155,7 @@
     }
 
     onLoad() {
-      let self = this
-      // wepy.setNavigationBarColor({
-      //   frontColor: '#ffffff',
-      //   backgroundColor: '#00abef',
-      //   animation: {
-      //     duration: 400,
-      //     timingFunc: 'easeIn'
-      //   }
-      // })
-      this.getData()
+
     }
 
     onShow () {
