@@ -60,6 +60,7 @@
   import wepy from 'wepy'
   import domTool from '../utils/domTool'
   import user from '../api/user'
+  import auth from '../api/auth'
 
   export default class Index extends wepy.page {
     config = {
@@ -97,17 +98,24 @@
          address: source.address,
          phoneNumber: source.phoneNumber
        })
-      
        if(res.ok===1) {
          domTool.success('修改成功！')
-         //$switch(url:String|Object)
+         var data = this.$wxpage.options
          setTimeout(()=>{
-           this.$switch('index', {})
+           if(data.source) {
+             this.$navigate('detail', {id: data.id, date: data.date, time: data.time})
+           } else {
+             this.$switch('index', {})
+           }
          },400)
+       } else if(res.errMsg){
+
+         await auth.doLogin()
+         domTool.action('登录失效，请重新加载该页面')
        }
       },
       formReset: function() {
-        // console.log('form发生了reset事件')
+       
       }
     }
 
@@ -123,14 +131,6 @@
     }
 
     onLoad() {
-      // wepy.setNavigationBarColor({
-      //   frontColor: '#ffffff',
-      //   backgroundColor: '#00abef',
-      //   animation: {
-      //     duration: 400,
-      //     timingFunc: 'easeIn'
-      //   }
-      // })
       this.getData()
     }
 

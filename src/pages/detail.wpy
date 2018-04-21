@@ -1,66 +1,65 @@
 <style lang="less">
   .container {
     width: 100%;
-    font-size: 25rpx;
     background: #f5f5f5;
-    font-weight: 600;
     margin-bottom: 110rpx;
     .imgbg {
       width: 100%;
     }
     .tips {
       width: 100%;
-      height: 170rpx;
-      padding: 27rpx 15rpx 10rpx 15rpx;
+      height: 188.80rpx;
+      padding: 20rpx 20.8rpx 10rpx 20.8rpx;
       box-sizing: border-box;
       background: white;
       .proname {
-        color: #515151;
-        font-size: 30rpx;
+        color: #7f7f7f;
+        font-size: 27rpx;
       }
       .bt {
         margin-top: 60rpx;
         display: flex;
-        font-size: 25rpx;
+        font-size: 18rpx;
         .price-block {
           color: #ec242c;
         }
         .number {
-          font-size: 30rpx;
+          font-size: 27rpx;
         }
       }
       .info {
         flex:1;
         text-align: right;
-        color: #BCBCBC;
+        color: #8f8f8f;
+        font-size: 18rpx;
       }
     }
     .yh, .bz{
-      border-top: 1px solid #e5e5e5;
-      color: #D2D2D2;
+      
+      color: #4c4c4c;
       width: 100%;
       background: white;
-      height: 90rpx;
-      line-height: 90rpx;
-      padding: 0 20rpx;
+      height: 95.13rpx;
+      font-size: 25rpx;
+      line-height: 95.13rpx;
+      padding: 0 20.8rpx;
       box-sizing: border-box;
       .icon {
         float: right;
       }
     }
-    .bz { 
-      color: #27C24C;
+    .bz {
+      color: #b4b4b4;
     }
     .fusj {
       margin: 18rpx auto;
-      font-weight: 500;
       background: white;
       width: 100%;
       display: flex;
-      padding: 0rpx 15rpx;
+      padding: 0rpx 20.8rpx;
       box-sizing: border-box;
-      height: 90rpx;
-      line-height: 90rpx;
+      height: 95.13rpx;
+      line-height: 95.13rpx;
       font-size: 25rpx;
       .section {
         flex: 1;
@@ -74,21 +73,23 @@
     }
     .serverinfo {
       margin-bottom: 18rpx;
-      padding-left: 15rpx;
-      padding-right: 10rpx;
+      padding-left: 20.8rpx;
+      padding-right: 20.8rpx;
       box-sizing: border-box;
       color: #4c4c4c;
       width: 100%;
       font-size: 25rpx;
+      padding-top: 13rpx;
       background: white;
       .info1 {
-        margin: 15rpx auto;
+        margin: 12rpx auto;
+        line-height: 42rpx;
       }
       .big{
-        margin-top: 55rpx;
+        margin-top: 55.55rpx;
       }
       .detail { 
-        line-height: 30rpx;
+        line-height: 42rpx;
       }
     }
   }
@@ -107,14 +108,17 @@
     background: white;
     font-size: 25rpx;
     color: #4c4c4c;
+    padding: 25rpx  20.8rpx;
     .title {
-      padding: 25rpx 15rpx;
+      padding-bottom: 25rpx;
       border-bottom: 1px solid #e4e4e4;
+      // margin-bottom: 100rpx;
+    }
+    .item:first-of-type {
+      margin-top: 25rpx;
     }
     .item {
       box-sizing: border-box;
-      padding-left: 15rpx;
-      padding-right: 10rpx;
       margin-top: 10rpx;
       display: inline-block;
       line-height: 40rpx;
@@ -123,12 +127,14 @@
   .ok1 {
     margin: 0 5rpx;
   }
+  .bor {
+    border-top: 1px solid #e5e5e5;
+  }
 </style>
 
 <template>
   <view class="container">
-    <image class="imgbg" src="{{objonfo.showImg}}" mode="widthFix"></image> 
-
+    <image class="imgbg" src="{{objonfo.showImg}}" mode="aspectFill"></image> 
     <view class="tips">
       <text class="proname">{{objonfo.title}}</text>
       <view class="bt">
@@ -140,20 +146,23 @@
     </view>
 
     <view class="yh" @tap="gotoPrice">
-      会员 充事实上董是生生世世
-      <wxc-icon size="25" class="icon right" type="arrow-right"></wxc-icon>
+      <view class="bor">
+        会员 充500送100 充1000送300 充2000送800
+        <wxc-icon size="25" class="icon right" type="arrow-right" color="#c6c6c6"></wxc-icon>
+      </view>
     </view>
 
     <view class="bz">
-      保障
-      <wxc-icon size="28" type="yes" class="ok1" color="#27C24C"></wxc-icon>无额外收费
-      <wxc-icon size="28" type="yes" class="ok1" color="#27C24C"></wxc-icon>爽约包赔
-      <wxc-icon size="28" type="yes" class="ok1" color="#27C24C"></wxc-icon>不满意重服务
+      <view class="bor">
+        保障
+        <wxc-icon size="28" type="yes" class="ok1" color="#27C24C"></wxc-icon>无额外收费
+        <wxc-icon size="28" type="yes" class="ok1" color="#27C24C"></wxc-icon>爽约包赔
+        <wxc-icon size="28" type="yes" class="ok1" color="#27C24C"></wxc-icon>不满意重服务
+      </view>
     </view>
     <!-- 服务时间 -->
     <view class="fusj">
         <view class="title section">服务时间</view>
-
         <view class="section section1">
             <picker mode="date" value="{{date}}" start="{{startDate}}" end="{{endDate}}" bindchange="bindDateChange">
                 <view class="picker">
@@ -161,7 +170,6 @@
                 </view>
             </picker>
         </view>        
-
         <view class="section section1">
             <picker mode="time" value="{{time}}" start="{{startTime}}" end="{{endTime}}" bindchange="bindTimeChange">
                 <view class="picker">
@@ -192,13 +200,15 @@
     </view>
     <!-- 订购须知 -->
     <view class="purchase">
-      <view class="title">订购须知</view>
-      <text class="item">1. 本店严格拒绝一切形式的非正规服务，举报有奖</text>
-      <text class="item">2. 订单确认后，修改订单或退款需提前2小时通知</text>
-      <text class="item">3. 预约时间前2小时内退单将按30元/人口去空单费</text>
-      <text class="item">4. 如商家接单后爽约将全额退款并向您额外赔付30元</text>
-      <text class="item">5. 为保障您的权益，所有费用请通过本平台支付</text>
-      <text class="item">6. 本店24小时上门服务，但因夜间交通不便，晚21:00 ～ 早07:00间服务的订单，需另行向技师支付往返打车费用（往返共不超过100元）</text>
+      <view class="bors">
+        <view class="title">订购须知</view>
+        <text class="item">1. 本店严格拒绝一切形式的非正规服务，举报有奖</text>
+        <text class="item">2. 订单确认后，修改订单或退款需提前2小时通知</text>
+        <text class="item">3. 预约时间前2小时内退单将按30元/人口去空单费</text>
+        <text class="item">4. 如商家接单后爽约将全额退款并向您额外赔付30元</text>
+        <text class="item">5. 为保障您的权益，所有费用请通过本平台支付</text>
+        <text class="item">6. 本店24小时上门服务，但因夜间交通不便，晚23:00 ～ 早07:00间服务的订单，需另行向技师支付往返打车费用（往返共不超过100元）</text>
+      </view>
     </view>
     <button class="buy" @tap="buyfunc">立即购买</button>  
   </view>
@@ -210,6 +220,7 @@
   import user from '../api/user'
   import goods from '../api/goods'
   import domTool from '../utils/domTool'
+  import auth from '../api/auth'
 
   export default class Index extends wepy.page {
     config = {
@@ -253,13 +264,11 @@
 
     watch = {
       date (n, o) {
-        // console.log(n, o)
         var res = ''
         var temp = new Date()
         var h = temp.getHours()
         var m = temp.getMinutes()
         var today = temp.toLocaleDateString().split('/').map(i => Number(i) < 10 ? '0' + i : i).join('-')
-        // console.log(today, n)
         if (h >= 9 && h < 23 && today === n) {
           res = h+2 + ':' + m
         } else {
@@ -283,7 +292,8 @@
 
         if(!wepy.getStorageSync('address').trim() || !wepy.getStorageSync('name').trim() || !wepy.getStorageSync('phoneNumber').trim()) {
           domTool.action('请填写个人信息')
-          this.$navigate('userInfo', {})
+          var goodid = this.$wxpage.options.id
+          this.$navigate('userInfo', {source: 'pay', id: goodid, date: this.date, time: this.time})
           return  
         }
         
@@ -297,11 +307,12 @@
           phoneNumber: wepy.getStorageSync('phoneNumber'),
           address: wepy.getStorageSync('address')
         })
-        let goodres = await goods.updateGood({
-          _id: this.objonfo._id
-        })
+
 
         if(resdata.success) {
+          let goodres = await goods.updateGood({
+            _id: this.objonfo._id
+          });
           if(resdata.balancePay) {
             domTool.success('购买成功')
             setTimeout(()=>{
@@ -310,8 +321,10 @@
           } else if(resdata.jsPay) {
             this.callPay(resdata.jsPay);
           }
+        } else if(resdata.errMsg) {
+          await auth.doLogin()
+          domTool.action('登录失效，请重新加载该页面')
         }
-
       },
       bindDateChange (e) {
         this.date = e.detail.value
@@ -340,6 +353,9 @@
     getData() {
       var params = this.$wxpage.options
       this.objonfo = wepy.getStorageSync('goodList')[params.id]
+      params.date ? (this.date = params.date) : ''
+      params.time ? (this.time = params.time) : ''
+      params.date && params.time ? this.buyfunc() : ''
     }
 
     onLoad() {

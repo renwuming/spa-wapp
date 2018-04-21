@@ -9,6 +9,7 @@ export default class auth extends base {
    */
   static async login () {
     const thirdSession = this.getAuthValue('thirdSession')
+    console.log('thirdSession', thirdSession)
     if (thirdSession != null && thirdSession !== '') {
       try {
         await this.checkLogin(thirdSession)
@@ -35,6 +36,7 @@ export default class auth extends base {
   static async doLogin () {
     const { code } = await wepy.login()
     const { thirdSession } = await this.session(code)
+    console.log(1234123423123)
     await this.setConfig('thirdSession', thirdSession)
     await this.login()
   }
@@ -53,6 +55,7 @@ export default class auth extends base {
    * @param {appid} jsCode 
    */
   static async session (jsCode) {
+    console.log('start',`${baseUrl}/sessionkey?code=${jsCode}`)
     const url = `${baseUrl}/sessionkey?code=${jsCode}`
     const res = await this.get(url)
     return res
@@ -107,10 +110,13 @@ export default class auth extends base {
   static async user () {
     try {
       // 检查
-      if (this.hasConfig('UserInfo')) {
-        return true
-      }
-      console.info('[auth] UserInfo check fail')
+      // const thirdSession = this.getAuthValue('thirdSession')
+      // let res = await this.checkLogin(thirdSession)
+      // console.log(res)
+      // if (res) {
+      //   return true
+      // }
+      // console.info('[auth] UserInfo check fail')
       // 重新登录
       await this.doLogin()
       // 获取用户信息
