@@ -88,15 +88,17 @@
   <view class="container">
      <view class="box">
         <view class="ye-text">您的余额 {{ye}}</view>    
-     </view>  
-     <button class="zan-btn zan-btn--primary">充值2000送500</button>
-     <button class="zan-btn zan-btn--primary">充值3000送200</button>
-     <button class="zan-btn zan-btn--primary">充值任意金额</button>
+     </view>
+     <button class="zan-btn zan-btn--primary" @tap="pay" data-value="2000">充值2000送500</button>
+     <button class="zan-btn zan-btn--primary" @tap="pay" data-value="3000">充值3000送200</button>
+     <button class="zan-btn zan-btn--primary" @tap="pay" data-value="0.01">充值任意金额</button>
   </view>
 </template>
 
 <script>
   import wepy from 'wepy'
+  import order from '../api/order'
+  import domTool from '../utils/domTool'
 
   export default class Index extends wepy.page {
     config = {
@@ -117,12 +119,36 @@
     }
 
     methods = {
+      async pay(e) {
+        const dataset = e.currentTarget.dataset,
+              {value} = dataset;
+        let data = {
+          orderTime: new Date().toLocaleString(),
+          createTime: new Date().toLocaleString(),
+          orderStatus: true,
+          server: "recharge",
+          price: value,
+          name: wepy.getStorageSync('name'),
+          phoneNumber: wepy.getStorageSync('phoneNumber'),
+          address: wepy.getStorageSync('address'),
+        };
+        const resdata = await order.createOrder(data);
+        if(resdata.success) {
+          this.callPay(resdata.jsPay);
+        }
+      }
 
     }
 
-    events = {
-
+    callPay(jsPay) {
+      wx.requestPayment({...jsPay, success: (errMsg) => {
+        domTool.success('购买成功')
+        setTimeout(()=>{
+         this.$switch('index', {})
+        },400)
+      }});
     }
+
 
     getData() {
       this.ye = wepy.getStorageSync('ye')

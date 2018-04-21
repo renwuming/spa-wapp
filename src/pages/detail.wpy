@@ -302,7 +302,14 @@
         })
 
         if(resdata.success) {
-          this.callPay(resdata.jsPay);
+          if(resdata.balancePay) {
+            domTool.success('购买成功')
+            setTimeout(()=>{
+             this.$switch('index', {})
+            },400)
+          } else if(resdata.jsPay) {
+            this.callPay(resdata.jsPay);
+          }
         }
 
       },
