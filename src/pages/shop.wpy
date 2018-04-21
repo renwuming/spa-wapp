@@ -2,46 +2,45 @@
   .container {
     width: 100%;
     box-sizing: border-box;
-    background: #ededed;
+    background: #f7f8fa;
+  }
+  .item:first-of-type {
+    margin-top: 12.5rpx;
   }
   .item {
-    width: 100%;
+    width: 750rpx;
     display: flex;
-    margin: 10rpx 0;
-    padding: 16rpx 10rpx;
+    margin-bottom: 12.5rpx;
+    padding: 21.5rpx 14.5rpx;
     box-sizing: border-box;
     background: white;
-    font-family: 'Microsoft yahei';
-    height: 260rpx;
+    height: 273rpx;
     .left {
-      flex: 1;
-      width: 0;
+      width: 32%;
       .img { 
         width: 100%;
         height: 100%;
-        border-radius: 10rpx;
+        border-radius: 8rpx;
       }
     }
     .right {
-      flex: 2;
-      width: 0;
-      padding-left: 15rpx;
+      width: 68%;
+      padding-left: 23.6rpx;
+      padding-right: 6rpx;
       box-sizing: border-box;
     }
     .top {
       width: 100%;
-      
-      
       .title {
-        margin: 10rpx 0;
-        font-weight: bold;
-        color: #5d5d5d;
-        font-size: 25rpx;
+        margin: 13.19rpx 0;
+        font-weight: 500;
+        color: #4c4c4c;
+        font-size: 27rpx;
       }
       .intro {
         width: 100%;
-        margin: 33rpx 0;
-        color: #aeaeae;
+        margin: 13.19rpx 0;
+        color: #939393;
         font-size: 25rpx;
         overflow: hidden;
         text-overflow:ellipsis;
@@ -49,23 +48,28 @@
       }
       .price-box {
         color: #EF5050;
-        margin: 10rpx 0;
-        font-size: 22rpx;
+        margin: 23.1rpx 0 17.2rpx 0rpx;
+        font-size: 18rpx;
         .price {
-          font-size: 25rpx;
+          font-size: 27rpx;
         }
       }
     }
     .bottom {
       width: 100%;
-      border-top: 1px dotted #d0d0d0;
+      box-sizing: border-box;
+      border-top: 2.5rpx dashed #bbbbbb;
       font-size: 22rpx;
-      font-weight: 600;
-      color: #959595;
+      color: #8f8f8f;
       text-align: right;
-      padding-top: 10rpx;
+      padding-right: 12.5rpx;
+      padding-top: 35rpx;
     }
   }
+  // .miss {
+  //   width: 750rpx;
+  //   background: purple;
+  // }
 </style>
 
 <template>
@@ -73,7 +77,7 @@
     <repeat for="{{goodList}}" key="index" index="index" item="item">
       <view class="item" @tap="gotoDetail({{index}})">
         <view class="left">
-          <image src="{{item.leftImg}}" class="img"/>  
+          <image src="{{item.leftImg}}" class="img" mode="aspectFill"/>  
         </view>
         <view class="right">
           <view class="top">
@@ -90,6 +94,7 @@
         </view>
       </view>
     </repeat>
+    <!-- <view class="miss">I Miss you</view> -->
   </view>
 </template>
 

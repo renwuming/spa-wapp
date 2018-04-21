@@ -100,18 +100,22 @@
        })
        if(res.ok===1) {
          domTool.success('修改成功！')
-         //$switch(url:String|Object)
+         var data = this.$wxpage.options
          setTimeout(()=>{
-           this.$switch('index', {})
+           if(data.source) {
+             this.$navigate('detail', {id: data.id, date: data.date, time: data.time})
+           } else {
+             this.$switch('index', {})
+           }
          },400)
        } else if(res.errMsg){
-        //  console.log('重新登录了！')
+
          await auth.doLogin()
          domTool.action('登录失效，请重新加载该页面')
        }
       },
       formReset: function() {
-        // console.log('form发生了reset事件')
+       
       }
     }
 
