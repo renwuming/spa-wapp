@@ -34,6 +34,7 @@
           <view class="ite">服务名称：{{item.server}}</view>
           <view class="ite">服务价格：{{item.price}}元</view>
           <view class="ite">服务状态：{{item.orderStatus?  '已完成' : '待完成'}}</view>
+          <view class="ite">支付状态：{{item.payStatus?  '已支付' : '未支付'}}</view>
           <view class="ite">下单时间：{{item.createTime}}</view>
           <view class="ite">预约时间：{{item.orderTime}}</view>
         </view>
