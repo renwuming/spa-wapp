@@ -6,6 +6,7 @@ import WxUtils from './utils/wx-utils';
 import 'wepy-async-function';
 import { setStore } from 'wepy-redux';
 import configStore from './store';
+import Promise from 'promise-polyfill'
 
 const store = configStore();
 setStore(store);

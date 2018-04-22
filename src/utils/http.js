@@ -1,5 +1,6 @@
 import wepy from 'wepy'
-import wxR from '../api/wxR'
+// import wxR from '../api/wxR'
+import Promise from 'promise-polyfill'
 
 export default class http {
   static async request (method, url, data, loading = true) {
@@ -9,6 +10,9 @@ export default class http {
       method: method,
       data: data
     }
+
+    // console.log('promise', Promise)
+
     let result = ''
     result = await wepy.request(param)
     return result.data
