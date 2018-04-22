@@ -104,9 +104,9 @@
          var that = this;
          var data = this.$wxpage.options
          setTimeout(()=>{
-           if(data.source) {
+           if(!data.source) {
              that.setdata(['address','name','phoneNumber'], [source.address, source.Name, source.phoneNumber])
-             this.$navigate('detail', {id: data.id, date: data.date, time: data.time})
+             this.$redirect('detail', {id: data.id, date: data.date, time: data.time})
            } else {
              this.$switch('index', {})
            }
