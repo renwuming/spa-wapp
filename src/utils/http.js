@@ -1,4 +1,5 @@
 import wepy from 'wepy'
+import wxR from '../api/wxR'
 
 export default class http {
   static async request (method, url, data, loading = true) {
@@ -8,12 +9,9 @@ export default class http {
       method: method,
       data: data
     }
-    console.log(wepy.request)
-    console.log('最新数据', param)
-    const res = await wepy.request(param)
-    console.log('get', res)
-    return res.data
-
+    let result = ''
+    result = await wepy.request(param)
+    return result.data
   }
 
   static isSuccess (res) {

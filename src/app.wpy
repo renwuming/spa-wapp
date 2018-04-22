@@ -54,7 +54,6 @@ export default class extends wepy.app {
     this.use('promisify');
     this.intercept('request', {
       config(p) {
-        // console.log('拦截成功！', this.createAuthHeader())
         p.header = this.createAuthHeader();
         return p;
       }

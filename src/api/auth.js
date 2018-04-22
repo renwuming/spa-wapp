@@ -4,24 +4,6 @@ import base from './base'
 const baseUrl = wepy.$instance.globalData.baseUrl
 
 export default class auth extends base {
-  /**
-   * 登陆接口
-   */
-  // static async login () {
-  //   const thirdSession = this.getAuthValue('thirdSession')
-  //   console.log('thirdSession', thirdSession)
-  //   if (thirdSession != null && thirdSession !== '') {
-  //     try {
-  //       await this.checkLogin(thirdSession)
-  //     } catch (e) {
-  //       console.warn('check login code fial', thirdSession)
-  //       await this.doLogin()
-  //     }
-  //   } else {
-  //     console.warn('login code not exists', thirdSession)
-  //     await this.doLogin()
-  //   }
-  // }
 
   /**
    * 获取权限值
