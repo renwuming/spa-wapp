@@ -100,9 +100,12 @@
        })
        if(res.ok===1) {
          domTool.success('修改成功！')
+         // 更新storage
+         var that = this;
          var data = this.$wxpage.options
          setTimeout(()=>{
            if(data.source) {
+             that.setdata(['address','name','phoneNumber'], [source.address, source.Name, source.phoneNumber])
              this.$navigate('detail', {id: data.id, date: data.date, time: data.time})
            } else {
              this.$switch('index', {})
@@ -121,6 +124,12 @@
 
     events = {
 
+    }
+
+    setdata(arr1,arr2) {
+      arr1.forEach((item,index)=>{
+        wepy.setStorageSync(item, arr2[index])
+      })
     }
 
     getData() {
