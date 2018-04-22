@@ -143,7 +143,7 @@
       // 拨打电话
       makePhone() {
         wepy.makePhoneCall({
-          phoneNumber: '18810706415' 
+          phoneNumber: '18811419298'
         })
       },
       // 去新页面
@@ -210,7 +210,7 @@
           // this.$navigate('userInfo', {})
         })          
       }
-      this.setdata(['ye','address','name','phoneNumber'], [res.money, res.address, res.name, res.phoneNumber])
+      this.setdata(['ye','address','name','phoneNumber','gender'], [res.money, res.address, res.name, res.phoneNumber,res.gender])
       // wepy.setStorageSync('ye', res.money)
       // console.log(res)
       if (res.success) {
