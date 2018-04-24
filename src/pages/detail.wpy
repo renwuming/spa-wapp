@@ -2,7 +2,7 @@
   .container {
     width: 100%;
     background: #f5f5f5;
-    padding-bottom: 110rpx;
+    padding-bottom: 100rpx;
     .imgbg {
       width: 100%;
     }
@@ -14,24 +14,24 @@
       background: white;
       .proname {
         color: #7f7f7f;
-        font-size: 27rpx;
+        font-size: 16px;
       }
       .bt {
         margin-top: 60rpx;
         display: flex;
-        font-size: 18rpx;
+        font-size: 13px;
         .price-block {
           color: #ec242c;
         }
         .number {
-          font-size: 27rpx;
+          font-size: 16px;
         }
       }
       .info {
         flex:1;
         text-align: right;
         color: #8f8f8f;
-        font-size: 18rpx;
+        font-size: 12px;
       }
     }
     .yh, .bz{
@@ -59,7 +59,7 @@
       box-sizing: border-box;
       height: 95.13rpx;
       line-height: 95.13rpx;
-      font-size: 25rpx;
+      font-size: 13px;
       .section {
         flex: 1;
       }
@@ -77,7 +77,7 @@
       box-sizing: border-box;
       color: #4c4c4c;
       width: 100%;
-      font-size: 25rpx;
+      font-size: 12px;
       padding-top: 13rpx;
       background: white;
       .info1 {
@@ -87,7 +87,7 @@
       .big{
         margin-top: 55.55rpx;
       }
-      .detail { 
+      .detail {
         line-height: 42rpx;
       }
     }
@@ -101,11 +101,11 @@
     color: white;
     background: #e94840;
     border-radius: 0;
-    font-size: 35rpx;
+    font-size: 18px;
   }
   .purchase {
     background: white;
-    font-size: 25rpx;
+    font-size: 12px;
     color: #4c4c4c;
     padding: 25rpx  20.8rpx;
     .title {
@@ -127,6 +127,7 @@
     margin: 0 5rpx;
   }
   .bor {
+    font-size: 13px;
     border-top: 1px solid #e5e5e5;
   }
 </style>
@@ -180,7 +181,7 @@
     <!-- 服务说明 -->
     <view class="serverinfo">
       <view class="info1">服务时长: {{objonfo.serviceTime}}</view>
-      <view class="info1">服务姿势:{{objonfo.serviceStatus}}</view>
+      <view class="info1">服务姿势: {{objonfo.serviceStatus}}</view>
       <view class="info1 big">适用人群:
         <view class="detail">{{objonfo.fixPersion}}</view>
       </view>
@@ -206,7 +207,7 @@
         <text class="item">3. 预约时间前2小时内退单将按30元/人口去空单费</text>
         <text class="item">4. 如商家接单后爽约将全额退款并向您额外赔付30元</text>
         <text class="item">5. 为保障您的权益，所有费用请通过本平台支付</text>
-        <text class="item">6. 本店24小时上门服务，但因夜间交通不便，晚23:00 ～ 早07:00间服务的订单，需另行向技师支付往返打车费用（往返共不超过100元）</text>
+        <text class="item">6. 本店24小时上门服务，但因夜间交通不便，晚23:00至早07:00间服务的订单，需另行向技师支付往返打车费用（往返共不超过100元）</text>
       </view>
     </view>
     <button class="buy" @tap="buyfunc">立即购买</button>  
@@ -228,7 +229,8 @@
         'wxc-toast': '../../packages/@minui/wxc-toast/dist/index',
         'wxc-icon': '../../packages/@minui/wxc-icon/dist/index',
         'wxc-badge': '../../packages/@minui/wxc-badge/dist/index'
-      }
+      },
+      backgroundColor: '#f5f5f5',
     }
 
     components = {
@@ -278,26 +280,27 @@
       async buyfunc () {
         if(!wepy.getStorageSync('city')) {
           domTool.action('您不在北京，无法购买！')
-          return 
+          return
         }
         // 判断有没有填写信息
-        if(this.date === '选择日期' || this.time === '选择时间'){
-          domTool.action('请选择服务时间')
-          return 
-        }
-
         if(!wepy.getStorageSync('address').trim() || !wepy.getStorageSync('name').trim() || !wepy.getStorageSync('phoneNumber').trim()) {
-          domTool.action('请绑定个人信息')
+          domTool.alert('请绑定个人信息')
           var goodid = this.$wxpage.options.id
           setTimeout(() => {
-            this.$redirect('userInfo', {source: 'pay', id: goodid, date: this.date, time: this.time})
+            this.$navigate('userInfo', {source: 'pay', id: goodid, date: this.date, time: this.time})
           }, 500);
           return
         }
-        
+
+        if(this.date === '选择日期' || this.time === '选择时间'){
+          domTool.alert('请选择服务时间')
+          return
+        }
+
         let resdata = await order.createOrder({
           orderTime: '日期：'+ this.date +'，时间：'+this.time,
           createTime: new Date().toLocaleString(),
+          orderImg: this.objonfo.leftImg,
           orderStatus: false,
           server: this.objonfo.title,
           price: this.objonfo.price,
@@ -312,10 +315,7 @@
             _id: this.objonfo._id
           });
           if(resdata.balancePay) {
-            domTool.success('购买成功')
-            setTimeout(()=>{
-             this.$switch('index', {})
-            },400)
+            this.paySuccess();
           } else if(resdata.jsPay) {
             this.callPay(resdata.jsPay);
           }
@@ -337,11 +337,15 @@
 
     callPay(jsPay) {
       wx.requestPayment({...jsPay, success: (errMsg) => {
-        domTool.success('购买成功')
-        setTimeout(()=>{
-         this.$switch('index', {})
-        },400)
+        this.paySuccess();
       }});
+    }
+
+    paySuccess() {
+      domTool.success('预约成功')
+      setTimeout(()=>{
+       this.$switch('shop', {})
+      },400)
     }
 
     events = {

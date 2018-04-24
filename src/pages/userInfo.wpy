@@ -214,11 +214,11 @@ page {
       },
       async submit(e) {
         var source = this.userInfo;
-        if(source.name.toString() == "" || source.address.toString() === "") {
+        if(!source.gender || source.name.toString() == "" || source.address.toString() === "") {
           domTool.alert('请填写完整')
           return;
         }
-        if(!/^1[3|4|5|7|8][0-9]{9}$/.test(source.phoneNumber)) {
+        if(!/^1[0-9]{10}$/.test(source.phoneNumber)) {
           domTool.alert('手机号码有误')
           return;
         }
@@ -235,12 +235,8 @@ page {
          var that = this;
          var data = this.$wxpage.options
          setTimeout(()=>{
-           if(data.source) {
-             that.setdata(['address','name','phoneNumber','gender'], [source.address, source.name, source.phoneNumber,source.gender])
-             this.$redirect('detail', {id: data.id, date: data.date, time: data.time})
-           } else {
-             this.$switch('index', {})
-           }
+           that.setdata(['address','name','phoneNumber','gender'], [source.address, source.name, source.phoneNumber,source.gender])
+           wx.navigateBack();
          },400)
        } else if(res.errMsg){
 

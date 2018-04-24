@@ -5,16 +5,15 @@
     background: #f7f8fa;
   }
   .item:first-of-type {
-    margin-top: 12.5rpx;
+    margin-top: 20rpx;
   }
   .item {
     width: 750rpx;
     display: flex;
-    margin-bottom: 12.5rpx;
+    margin-bottom: 20rpx;
     padding: 21.5rpx 14.5rpx;
     box-sizing: border-box;
     background: white;
-    height: 273rpx;
     .left {
       width: 32%;
       .img { 
@@ -32,16 +31,16 @@
     .top {
       width: 100%;
       .title {
-        margin: 13.19rpx 0;
+        margin-bottom: 12rpx 0;
         font-weight: 500;
         color: #4c4c4c;
-        font-size: 27rpx;
+        font-size: 16px;
       }
       .intro {
         width: 100%;
-        margin: 13.19rpx 0;
+        margin: 12rpx 0;
         color: #939393;
-        font-size: 25rpx;
+        font-size: 13px;
         overflow: hidden;
         text-overflow:ellipsis;
         white-space: nowrap;
@@ -49,9 +48,9 @@
       .price-box {
         color: #EF5050;
         margin: 23.1rpx 0 17.2rpx 0rpx;
-        font-size: 18rpx;
+        font-size: 13px;
         .price {
-          font-size: 27rpx;
+          font-size: 16px;
         }
       }
     }
@@ -59,11 +58,11 @@
       width: 100%;
       box-sizing: border-box;
       border-top: 2.5rpx dashed #bbbbbb;
-      font-size: 22rpx;
+      font-size: 12px;
       color: #8f8f8f;
       text-align: right;
       padding-right: 12.5rpx;
-      padding-top: 35rpx;
+      padding-top: 20rpx;
     }
   }
   // .miss {

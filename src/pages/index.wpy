@@ -45,6 +45,7 @@
       box-sizing: border-box;
     }
     .count {
+      display: inline-block;
       margin-left: 10rpx;
       vertical-align: middle;
     }

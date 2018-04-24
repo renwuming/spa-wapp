@@ -2,20 +2,7 @@
   .container {
     width: 100%;
     box-sizing: border-box;
-    padding:10rpx 15rpx;
-  }
-  .item {
-    width: 100%;
-    border-radius: 20rpx;
-    box-sizing: border-box;
-    color: white;
-    margin: 10rpx;
-    padding: 10rpx;
-    font-size: 28rpx;
-  }
-
-  .ite {
-    line-height: 40rpx;
+    background-color: #f2f2f2;
   }
 
   .un {
@@ -25,20 +12,115 @@
   .co {
     background: #d5d5d5;
   }
+
+
+
+  .item {
+    display: flex;
+    width: 100%;
+    font-size: 28px;
+    padding: 21.5rpx 14.5rpx;
+    box-sizing: border-box;
+    background: white;
+    .left {
+      width: 230rpx;
+      height: 230rpx;
+      .img {
+        width: 100%;
+        height: 100%;
+        border-radius: 8rpx;
+      }
+    }
+    .right {
+      flex: 1;
+      padding-left: 23.6rpx;
+      padding-right: 6rpx;
+      box-sizing: border-box;
+    }
+    .top {
+      width: 100%;
+      display: flex;
+      .left-box {
+        width: 70%;
+      }
+      .title {
+        margin-bottom: 12rpx;
+        font-weight: 500;
+        color: #4c4c4c;
+        font-size: 16px;
+      }
+      .time {
+        margin-top: 6rpx;
+        color: #939393;
+        font-size: 12px;
+        overflow: hidden;
+        text-overflow:ellipsis;
+        white-space: nowrap;
+      }
+      .time-title {
+        margin-top: 40rpx;
+      }
+      .price-box {
+        width: 200rpx;
+        flex-shrink: 0;
+        color: #EF5050;
+        font-size: 14px;
+        text-align: right;
+        .price {
+          font-size: 22px;
+        }
+      }
+    }
+  }
+  .bottom {
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    border-top: 2.5rpx dashed #bbbbbb;
+    font-size: 12px;
+    color: #8f8f8f;
+    padding: 20rpx;
+    margin-bottom: 20rpx;
+    .status {
+      font-size: 12px;
+    }
+    .red {
+      color: #EF5050;
+    }
+  }
 </style>
 
 <template>
   <view class="container">
     <repeat for="{{order}}" key="index" index="index" item="item">
-      <view class="{{item.orderStatus? 'item co' : 'item un' }}">
-          <view class="ite">服务名称：{{item.server}}</view>
-          <view class="ite">服务价格：{{item.price}}元</view>
-          <view class="ite">服务状态：{{item.orderStatus?  '已完成' : '待完成'}}</view>
-          <view class="ite">支付状态：{{item.payStatus?  '已支付' : '未支付'}}</view>
-          <view class="ite">下单时间：{{item.createTime}}</view>
-          <view class="ite">预约时间：{{item.orderTime}}</view>
+
+      <view class="item">
+        <view class="left">
+          <image src="{{item.orderImg}}" class="img" mode="aspectFill"/>
         </view>
-    </repeat>  
+        <view class="right">
+          <view class="top">
+            <view class='left-box'>
+              <view class="title">{{item.server}}</view>
+              <view class="time time-title">预约时间：</view>
+              <view class="time">{{item.orderTime[0]}}</view>
+              <view class="time">{{item.orderTime[1]}}</view>
+            </view>
+            <view class="price-box">
+              <text class="price">{{item.price}}</text>
+              元
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="bottom">
+        <text class="">{{item.createTime}}</text>
+        <text class="status {{item.orderStatus?  '' : 'red'}}">服务状态：{{item.orderStatus?  '已完成' : '待完成'}}</text>
+      </view>
+    </repeat>
   </view>
 </template>
 
@@ -63,7 +145,6 @@
     }
 
     methods = {
-
     }
 
     events = {
@@ -77,6 +158,9 @@
         if(item.orderStatus) {
           return 1
         }
+      })
+      this.order.forEach(e => {
+        e.orderTime = e.orderTime.split('，');
       })
     }
 
