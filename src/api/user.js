@@ -13,6 +13,15 @@ export default class goods extends base {
   }
 
   /**
+   * 用户加密数据传给后端，解密后存入数据库并返回前端
+   * @param {加密数据} data
+   */
+  static async addSecretUser (data) {
+    const url = `${baseUrl}/users/secret`
+    return this.put(url, data)
+  }
+
+  /**
    * 把用户信息存入数据库
    * @param {用户信息} userinfo
    */
