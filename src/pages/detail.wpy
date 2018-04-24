@@ -248,6 +248,14 @@
       startDate () {
         var std = new Date()
         var h = std.getHours()
+        var m = std.getMinutes()
+        var arrn = []
+        // if(this.time !== '选择时间') {
+        //     arrn = this.time.split(':').map(item=>~~item)
+        // }
+        // if(h >= 22 || (arrn[0] < h || (arrn[0] === h && arrn[1] < m))) {
+        //   std.setDate(std.getDate()+1)
+        // }
         if(h >= 22) {
           std.setDate(std.getDate()+1)
         }
@@ -273,15 +281,18 @@
           res = '00:00'
         }
         this.startTime = res
-      }
+        this.$apply()
+      } 
     }
+
+
 
     methods = {
       async buyfunc () {
-        if(!wepy.getStorageSync('city')) {
-          domTool.action('您不在北京，无法购买！')
-          return
-        }
+        // if(!wepy.getStorageSync('city')) {
+        //   domTool.action('您不在北京，无法购买！')
+        //   return
+        // }
         // 判断有没有填写信息
         if(!wepy.getStorageSync('address').trim() || !wepy.getStorageSync('name').trim() || !wepy.getStorageSync('phoneNumber').trim()) {
           domTool.alert('请绑定个人信息')
