@@ -41,7 +41,6 @@ export default class http {
   }
 
   static get (url, data, loading = true) {
-    console.log('getgetgteet')
     return this.request('GET', url, data, loading)
   }
 
