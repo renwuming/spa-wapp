@@ -219,7 +219,7 @@ page {
           return;
         }
         if(!/^1[3|4|5|7|8][0-9]{9}$/.test(source.phoneNumber)) {
-          domTool.alert('请填写正确的手机号码')
+          domTool.alert('手机号码有误')
           return;
         }
 
@@ -237,7 +237,7 @@ page {
          setTimeout(()=>{
            if(data.source) {
              that.setdata(['address','name','phoneNumber','gender'], [source.address, source.name, source.phoneNumber,source.gender])
-             this.$navigate('detail', {id: data.id, date: data.date, time: data.time})
+             this.$redirect('detail', {id: data.id, date: data.date, time: data.time})
            } else {
              this.$switch('index', {})
            }

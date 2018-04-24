@@ -85,7 +85,7 @@
     <view class="list">
       <view class="item" @tap="gotoNewOrder">
         <text class="txt">我的预约</text>
-        <wxc-badge class="count" wx:if="{{orderCount.unused != 0}}">{{orderCount.unused}}</wxc-badge>
+        <wxc-badge class="count" wx:if="{{orderCount.unused &&orderCount.unused != 0}}">{{orderCount.unused}}</wxc-badge>
         <wxc-icon size="25" class="icon" type="arrow-right" color="#5e5e5e"></wxc-icon>
       </view>
       <view class="item" @tap="gotoNewMoney">

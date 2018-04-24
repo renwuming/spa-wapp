@@ -103,6 +103,7 @@
       width: 340rpx;
       font-size: 20px;
       line-height: 80rpx;
+      font-weight: bold;
     }
   }
 </style>
@@ -116,9 +117,11 @@
      <button class="zan-btn zan-btn--primary" @tap="payAny">充值任意金额</button>
   </view>
   <modal hidden="{{hideModalPay}}" title="会员卡充值" bindcancel="cancelModal" bindconfirm="payTheValue">
-    <view class="recharge-box">
-      <text>充值金额</text>
-      <input class="long" maxlength="5" bindinput="handlePayValue" type="number" value="{{payValue}}"/>
+    <view class="pay-box-wrapper">
+      <view class="recharge-box">
+        <text>充值金额</text>
+        <input class="long" maxlength="5" bindinput="handlePayValue" type="number" value="{{payValue}}"/>
+      </view>
     </view>
   </modal>
 </template>
@@ -146,7 +149,8 @@
 
     computed = {
       showYe() {
-        return parseFloat(this.ye).toFixed(2);
+        const res = parseFloat(this.ye).toFixed(2);
+        return isNaN(res) ? '-' : res;
       }
     }
 

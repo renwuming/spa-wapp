@@ -2,7 +2,7 @@
   .container {
     width: 100%;
     background: #f5f5f5;
-    margin-bottom: 110rpx;
+    padding-bottom: 110rpx;
     .imgbg {
       width: 100%;
     }
@@ -35,7 +35,6 @@
       }
     }
     .yh, .bz{
-      
       color: #4c4c4c;
       width: 100%;
       background: white;
@@ -286,15 +285,17 @@
         }
         // 判断有没有填写信息
         if(this.date === '选择日期' || this.time === '选择时间'){
-          domTool.action('请选择时间！')
+          domTool.action('请选择服务时间')
           return 
         }
 
         if(!wepy.getStorageSync('address').trim() || !wepy.getStorageSync('name').trim() || !wepy.getStorageSync('phoneNumber').trim()) {
-          domTool.action('请填写个人信息')
+          domTool.action('请绑定个人信息')
           var goodid = this.$wxpage.options.id
-          this.$navigate('userInfo', {source: 'pay', id: goodid, date: this.date, time: this.time})
-          return  
+          setTimeout(() => {
+            this.$redirect('userInfo', {source: 'pay', id: goodid, date: this.date, time: this.time})
+          }, 500);
+          return
         }
         
         let resdata = await order.createOrder({
