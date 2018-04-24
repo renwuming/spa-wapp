@@ -171,7 +171,7 @@
             </picker>
         </view>        
         <view class="section section1">
-            <picker mode="time" value="{{time}}" start="{{startTime}}" end="{{endTime}}" bindchange="bindTimeChange">
+            <picker mode="time" value="{{time}}" start="{{startTime}}" bindchange="bindTimeChange">
                 <view class="picker">
                   {{time}}
                 </view>
@@ -247,8 +247,8 @@
       startDate () {
         var std = new Date()
         var h = std.getHours()
-        if (h >= 21) {
-          std.setDate(std.getDate() + 1)
+        if(h >= 22) {
+          std.setDate(std.getDate()+1)
         }
         return std.toLocaleDateString().split('/').map(i => Number(i) < 10 ? '0' + i : i).join('-')
       },
@@ -256,9 +256,6 @@
         var std = new Date()
         std.setDate(std.getDate() + 30)
         return std.toLocaleDateString().split('/').map(i => Number(i) < 10 ? '0' + i : i).join('-')
-      },
-      endTime() {
-        return '23:00'
       }
     }
 
@@ -269,10 +266,10 @@
         var h = temp.getHours()
         var m = temp.getMinutes()
         var today = temp.toLocaleDateString().split('/').map(i => Number(i) < 10 ? '0' + i : i).join('-')
-        if (h >= 9 && h < 23 && today === n) {
-          res = h+2 + ':' + m
+        if (today === n) {
+          res = h + 2 + ':' + m
         } else {
-          res = '07:00'
+          res = '00:00'
         }
         this.startTime = res
       }

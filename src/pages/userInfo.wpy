@@ -235,9 +235,9 @@ page {
          var that = this;
          var data = this.$wxpage.options
          setTimeout(()=>{
-           if(data.source) {
-             that.setdata(['address','name','phoneNumber','gender'], [source.address, source.name, source.phoneNumber,source.gender])
-             this.$navigate('detail', {id: data.id, date: data.date, time: data.time})
+           if(!data.source) {
+             that.setdata(['address','name','phoneNumber'], [source.address, source.Name, source.phoneNumber])
+             this.$redirect('detail', {id: data.id, date: data.date, time: data.time})
            } else {
              this.$switch('index', {})
            }
