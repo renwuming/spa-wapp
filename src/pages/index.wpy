@@ -46,7 +46,18 @@
     }
     .count {
       display: inline-block;
-      margin-left: 10rpx;
+      text-align: center;
+      margin-left: 15rpx;
+      position: relative;
+      vertical-align: middle;
+      width: 35rpx;
+      height: 35rpx;
+      line-height: 35rpx;
+      color: white;
+      background: red;
+      border-radius: 50%;
+    }
+    .txt {
       vertical-align: middle;
     }
     .icon {
@@ -86,7 +97,7 @@
     <view class="list">
       <view class="item" @tap="gotoNewOrder">
         <text class="txt">我的预约</text>
-        <wxc-badge class="count" wx:if="{{orderCount.unused &&orderCount.unused != 0}}">{{orderCount.unused}}</wxc-badge>
+        <text class="count" wx:if="{{orderCount.unused && orderCount.unused != 0}}">{{orderCount.unused}}</text>
         <wxc-icon size="25" class="icon" type="arrow-right" color="#5e5e5e"></wxc-icon>
       </view>
       <view class="item" @tap="gotoNewMoney">
@@ -236,36 +247,36 @@
 
     async onLoad() {
       // 实例化腾讯地图API核心类
-      var qqmapsdk = new QQMapWX({
-        key: 'NZRBZ-AHMKJ-VVKFU-KCD7L-YSZEV-7KBR6' // 必填
-      });
-      //获取当前位置坐标
-      wx.getLocation({
-        type: 'wgs84',
-        // 允许获取地理位置
-        success: function (res) {
-          // 2、根据坐标获取当前位置名称，显示在顶部:腾讯地图逆地址解析
-          qqmapsdk.reverseGeocoder({
-            location: {
-              latitude: res.latitude,
-              longitude: res.longitude
-            },
-            success: function (addressRes) {
-              var city = addressRes.result.address_component.city;
-              if(city === '北京市') {
-                wepy.setStorageSync('city', true)             
-              } else {
-                wepy.setStorageSync('city', false)
-                domTool.action('您当前不在北京，无法预约该服务！')
-              }
-            }
-          })
-        },
-        // 不允许获取地理位置
-        fail: function() {
-          domTool.action('不在北京地区的用户无法预约该服务')
-        }
-      })
+      // var qqmapsdk = new QQMapWX({
+      //   key: 'NZRBZ-AHMKJ-VVKFU-KCD7L-YSZEV-7KBR6' // 必填
+      // });
+      // //获取当前位置坐标
+      // wx.getLocation({
+      //   type: 'wgs84',
+      //   // 允许获取地理位置
+      //   success: function (res) {
+      //     // 2、根据坐标获取当前位置名称，显示在顶部:腾讯地图逆地址解析
+      //     qqmapsdk.reverseGeocoder({
+      //       location: {
+      //         latitude: res.latitude,
+      //         longitude: res.longitude
+      //       },
+      //       success: function (addressRes) {
+      //         var city = addressRes.result.address_component.city;
+      //         if(city === '北京市') {
+      //           wepy.setStorageSync('city', true)             
+      //         } else {
+      //           wepy.setStorageSync('city', false)
+      //           domTool.action('您当前不在北京，无法预约该服务！')
+      //         }
+      //       }
+      //     })
+      //   },
+      //   // 不允许获取地理位置
+      //   fail: function() {
+      //     domTool.action('不在北京地区的用户无法预约该服务')
+      //   }
+      // })
     }
 
     // 控制一下，unload 和 onshow 不要同时执行
