@@ -6,7 +6,7 @@
     position: relative;
     top: 315rpx;
   }
-  .top { 
+  .top {
     width: 100%;
     height: 520rpx;
   }
@@ -21,6 +21,7 @@
     height: 160rpx;
     border-radius: 50%;
     border: 1px solid #e4e4e4;
+    background-color: #fff;
   }
 
   .userinfo-nickname {
@@ -87,7 +88,7 @@
       <image src="../images/bg.png" background-size="cover" class="bg"/>
       <view class="userinfo">
         <image class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" mode="aspectFill"/>
-        <view class="userinfo-nickname">
+        <view wx:if="{{userInfo.nickName}}" class="userinfo-nickname">
           <text class="welcome"> hi </text>,
           {{ userInfo.nickName }}
         </view>
@@ -144,7 +145,8 @@
     data = {
       userInfo: '',
       orderCount: '',
-      order: ''
+      order: '',
+      titleImg: 'https://sec-cdn.static.xiaomi.net/secStatic/groups/miui-sec/rentianfu/spa-app/banner/banner1.jpg',
     }
 
     computed = {
@@ -198,90 +200,21 @@
         }
       })
       return {unused,total}
-    } 
-
-
-    async getData() {
-      // 校验是否登录成功
-      const result = await auth.user();
-      // 登陆成功
-      if (result) {
-        this.relData()
-      } else {
-        domTool.error('登录失败！')
-      }
     }
 
     async relData() {
-      // console.log('mingling')
       this.userInfo = wepy.$instance.globalData.UserInfo.userInfo
       this.$apply();
-      let res = await user.getUserInfo()
-      if(!res.address || !res.name || !res.phoneNumber) {
-        let bool = domTool.modal('请绑定个人信息，方便服务','提示',() => {
-          // this.$navigate('userInfo', {})
-        })          
-      }
-      this.setdata(['ye','address','name','phoneNumber','gender'], [res.money, res.address, res.name, res.phoneNumber,res.gender])
-      // wepy.setStorageSync('ye', res.money)
-      // console.log(res)
-      if (res.success) {
-        //渲染,  把关键数据存入 storage 
-        let orderres = await order.findOrder()
-        this.order = orderres
-        this.orderCount = this.computedOrderCount(orderres)
-        this.$apply();
-
-      } else {
-        await user.addUser({
-          nickName: this.userInfo.nickName,
-          name: '',
-          money: 0,
-          phoneNumber: '',
-          address: '',
-          orderCount: 0
-        })
-      }
-      return;
-    }
-
-    async onLoad() {
-      // 实例化腾讯地图API核心类
-      // var qqmapsdk = new QQMapWX({
-      //   key: 'NZRBZ-AHMKJ-VVKFU-KCD7L-YSZEV-7KBR6' // 必填
-      // });
-      // //获取当前位置坐标
-      // wx.getLocation({
-      //   type: 'wgs84',
-      //   // 允许获取地理位置
-      //   success: function (res) {
-      //     // 2、根据坐标获取当前位置名称，显示在顶部:腾讯地图逆地址解析
-      //     qqmapsdk.reverseGeocoder({
-      //       location: {
-      //         latitude: res.latitude,
-      //         longitude: res.longitude
-      //       },
-      //       success: function (addressRes) {
-      //         var city = addressRes.result.address_component.city;
-      //         if(city === '北京市') {
-      //           wepy.setStorageSync('city', true)             
-      //         } else {
-      //           wepy.setStorageSync('city', false)
-      //           domTool.action('您当前不在北京，无法预约该服务！')
-      //         }
-      //       }
-      //     })
-      //   },
-      //   // 不允许获取地理位置
-      //   fail: function() {
-      //     domTool.action('不在北京地区的用户无法预约该服务')
-      //   }
-      // })
+      //渲染,  把关键数据存入 storage
+      let orderres = await order.findOrder()
+      this.order = orderres
+      this.orderCount = this.computedOrderCount(orderres)
+      this.$apply();
     }
 
     // 控制一下，unload 和 onshow 不要同时执行
     onShow () {
-      this.getData()
+      this.relData()
     }
 
   }

@@ -9,7 +9,7 @@ export default class auth extends base {
    * 获取权限值
    */
   static getAuthValue (key) {
-    return wepy.$instance.globalData[key]
+    return wepy.getStorageSync(key);
   }
 
   /**
@@ -35,7 +35,6 @@ export default class auth extends base {
    * @param {appid} jsCode 
    */
   static async session (jsCode) {
-    // console.log('start',`${baseUrl}/sessionkey?code=${jsCode}`)
     const url = `${baseUrl}/sessionkey?code=${jsCode}`
     const res = await this.get(url)
     return res
@@ -91,9 +90,7 @@ export default class auth extends base {
     try {
       // 检查
       const thirdSession = this.getAuthValue('thirdSession')
-      // console.log('hhhhhhh',thirdSession)
       let res = await this.checkLogin(thirdSession)
-      // console.log(res)
       if (res) {
         return true
       }

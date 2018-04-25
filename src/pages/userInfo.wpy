@@ -55,7 +55,7 @@ page {
       width: 240rpx;
       text-align: center;
       line-height: 88rpx;
-      color: #1AAD19;
+      color: #fc6c7e;
       border-left: 1rpx solid #E5E5E5;
     }
   }
@@ -124,10 +124,12 @@ page {
   margin-top: 100rpx;
   padding: 0 30rpx;
   .btn {
-    background-color: #44ba01;
-    border: none;
+    background-color: #f8a88d;
     color: #fff;
     font-weight: 300;
+  }
+  .btn:after {
+    border-color: #fff;
   }
 }
 

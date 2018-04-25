@@ -250,12 +250,6 @@
         var h = std.getHours()
         var m = std.getMinutes()
         var arrn = []
-        // if(this.time !== '选择时间') {
-        //     arrn = this.time.split(':').map(item=>~~item)
-        // }
-        // if(h >= 22 || (arrn[0] < h || (arrn[0] === h && arrn[1] < m))) {
-        //   std.setDate(std.getDate()+1)
-        // }
         if(h >= 22) {
           std.setDate(std.getDate()+1)
         }
@@ -289,10 +283,6 @@
 
     methods = {
       async buyfunc () {
-        // if(!wepy.getStorageSync('city')) {
-        //   domTool.action('您不在北京，无法购买！')
-        //   return
-        // }
         // 判断有没有填写信息
         if(!wepy.getStorageSync('address').trim() || !wepy.getStorageSync('name').trim() || !wepy.getStorageSync('phoneNumber').trim()) {
           domTool.alert('请绑定个人信息')
@@ -363,21 +353,42 @@
 
     }
 
-    getData() {
-      var params = this.$wxpage.options
-      this.objonfo = wepy.getStorageSync('goodList')[params.id]
+    onShareAppMessage(options) {
+      const title =  `${this.objonfo.title} - 脉度良子上门服务`
+      const path = `/pages/detail?id=${this.$wxpage.options.id}`;
+      const imageUrl = `${this.objonfo.leftImg}`;
+      return {
+        title,
+        imageUrl,
+        path,
+      };
+    }
+
+    async getData() {
+      const params = this.$wxpage.options
+      let list = wepy.getStorageSync('goodList');
+      if(!list) {
+        list = await this.getGoodsList();
+      }
+      this.objonfo = list[params.id]
       params.date ? (this.date = params.date) : ''
       params.time ? (this.time = params.time) : ''
       params.date && params.time ? this.buyfunc() : ''
     }
 
-    onLoad() {
-
+    async getGoodsList () {
+      let resdata = await goods.getGoodsList()
+      wepy.setStorageSync('goodList',resdata)
+      return resdata;
     }
 
-    onShow () {
+    async onShow () {
       this.getData()
+      let userInfo = wepy.getStorageSync('address');
+      if(!userInfo) {
+        await auth.user();
+        user.getUserInfo();
+      }
     }
-    
   }
 </script>

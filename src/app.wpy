@@ -6,7 +6,7 @@ import WxUtils from './utils/wx-utils';
 import 'wepy-async-function';
 import { setStore } from 'wepy-redux';
 import configStore from './store';
-import Promise from 'promise-polyfill'
+import Promise from 'promise-polyfill';
 
 const store = configStore();
 setStore(store);
@@ -24,11 +24,10 @@ export default class extends wepy.app {
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#f8a78e',
-      navigationBarTitleText: 'WeChat',
-      navigationBarTextStyle: 'black'
     },
     tabBar: {
       borderStyle: 'black',
+      selectedColor: '#fc6c7e',
       list: [
         {
           pagePath: 'pages/shop',
@@ -45,8 +44,6 @@ export default class extends wepy.app {
   globalData = {
     UserInfo: {},
     baseUrl: 'https://www.renwuming.cn/maidu',
-    // baseUrl: 'http://10.232.42.210:3000',
-    // baseUrl: 'http://10.232.23.232:3000'
   };
 
   constructor() {

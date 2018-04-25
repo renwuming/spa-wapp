@@ -175,6 +175,9 @@
     }
 
     async pay(value) {
+      if(isNaN(value)) {
+        return;
+      }
       let data = {
         orderTime: new Date().toLocaleString(),
         createTime: new Date().toLocaleString(),
@@ -202,7 +205,6 @@
 
 
     getData() {
-      
     }
 
     onLoad() {

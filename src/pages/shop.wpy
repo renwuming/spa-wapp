@@ -65,14 +65,15 @@
       padding-top: 20rpx;
     }
   }
-  // .miss {
-  //   width: 750rpx;
-  //   background: purple;
-  // }
+  .title-img {
+    width: 750rpx;
+    height: 586rpx;
+  }
 </style>
 
 <template>
   <view class="container">
+    <image src="{{titleImg}}" class="title-img" mode="aspectFill"/>
     <repeat for="{{goodList}}" key="index" index="index" item="item">
       <view class="item" @tap="gotoDetail({{index}})">
         <view class="left">
@@ -100,6 +101,8 @@
 <script>
   import wepy from 'wepy'
   import goods from '../api/goods'
+  import auth from "../api/auth"
+  import user from '../api/user'
 
   export default class Index extends wepy.page {
     config = {
@@ -114,7 +117,8 @@
     }
 
     data = {
-      goodList: []
+      goodList: [],
+      titleImg: 'https://sec-cdn.static.xiaomi.net/secStatic/groups/miui-sec/rentianfu/spa-app/banner/banner1.jpg',
     }
 
     computed = {
@@ -142,8 +146,21 @@
 
     }
 
-    onShow () {
+    onShareAppMessage(options) {
+      const title =  `脉度良子 - 近在身边的推拿管家`
+      const path = `/pages/shop`;
+      const imageUrl = `${this.titleImg}`;
+      return {
+        title,
+        imageUrl,
+        path,
+      };
+    }
+
+    async onShow () {
       this.getData()
+      await auth.user();
+      user.getUserInfo();
     }
   }
 </script>
