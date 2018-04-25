@@ -371,6 +371,7 @@
         list = await this.getGoodsList();
       }
       this.objonfo = list[params.id]
+      this.$apply();
       params.date ? (this.date = params.date) : ''
       params.time ? (this.time = params.time) : ''
       params.date && params.time ? this.buyfunc() : ''
