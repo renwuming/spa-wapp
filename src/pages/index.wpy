@@ -1,96 +1,101 @@
 <style lang="less">
-  .userinfo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    top: 315rpx;
-  }
-  .top {
-    width: 100%;
-    height: 520rpx;
-  }
-  .bg {
-    width: 100%;
-    position: absolute;
-    z-index: -99;
-    height: 410rpx;
-  }
-  .userinfo-avatar {
-    width: 160rpx;
-    height: 160rpx;
-    border-radius: 50%;
-    border: 1px solid #e4e4e4;
-    background-color: #fff;
-  }
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  top: 315rpx;
+}
+.top {
+  width: 100%;
+  height: 520rpx;
+}
+.bg {
+  width: 100%;
+  position: absolute;
+  z-index: -99;
+  height: 410rpx;
+}
+.userinfo .avatar {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  border: 1px solid #e4e4e4;
+  background-color: #fff;
+  overflow:hidden;
+}
 
-  .userinfo-nickname {
-    margin-top: 5rpx;
-    color: #5e5e5e;
-  }
-  .welcome {
-    color: #ff5722;
-    font-weight: bolder;
-  }
-  .list {
+.userinfo-nickname {
+  margin-top: 5rpx;
+  color: #5e5e5e;
+}
+.welcome {
+  color: #ff5722;
+  font-weight: bolder;
+}
+.list {
+  width: 100%;
+  font-size: 12px;
+  color: #5e5e5e;
+  .item {
+    display: inline-block;
+    text-align: left;
     width: 100%;
-    font-size: 12px;
+    line-height: 90rpx;
+    background: white;
+    padding: 0 25rpx;
+    box-sizing: border-box;
+  }
+  .count {
+    display: inline-block;
+    text-align: center;
+    margin-left: 15rpx;
+    position: relative;
+    vertical-align: middle;
+    width: 35rpx;
+    height: 35rpx;
+    line-height: 35rpx;
+    color: white;
+    background: red;
+    border-radius: 50%;
+  }
+  .txt {
+    vertical-align: middle;
+  }
+  .icon {
+    float: right;
+  }
+  .btn {
+    appearance: none;
+    width: 100%;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: none;
+    outline: unset;
     color: #5e5e5e;
-    .item {
-      display: inline-block;
-      text-align: left;
-      width: 100%;
-      line-height: 90rpx;
-      background: white;
-      padding: 0 25rpx;
-      box-sizing: border-box;
-    }
-    .count {
-      display: inline-block;
-      text-align: center;
-      margin-left: 15rpx;
-      position: relative;
-      vertical-align: middle;
-      width: 35rpx;
-      height: 35rpx;
-      line-height: 35rpx;
-      color: white;
-      background: red;
-      border-radius: 50%;
-    }
-    .txt {
-      vertical-align: middle;
-    }
-    .icon {
-      float: right;
-    }
-    .btn {
-      appearance: none;
-      width: 100%;
-      -webkit-appearance: none;
-      -moz-appearance: none;
+    font-size: 12px;
+    background: white;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    &::after {
       border: none;
-      outline: unset;
-      color: #5e5e5e;
-      font-size: 12px;
-      background: white;
-      margin: 0;
-      padding: 0;
-      text-align: left;
-      &::after{ border: none; }
     }
   }
+}
 </style>
 
 <template>
   <view class="container">
     <view class="top">
-      <image src="../images/bg.png" background-size="cover" class="bg"/>
+      <image src="../images/bg.png" background-size="cover" class="bg">
       <view class="userinfo">
-        <image class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" mode="aspectFill"/>
-        <view wx:if="{{userInfo.nickName}}" class="userinfo-nickname">
-          <text class="welcome"> hi </text>,
-          {{ userInfo.nickName }}
+        <view class='avatar'>
+          <open-data type="userAvatarUrl" mode="aspectFill"></open-data>
+        </view>
+        <view class="userinfo-nickname">
+          <text class="welcome">hi</text>,
+          <open-data type="userNickName" mode="aspectFill"></open-data>
         </view>
       </view>
     </view>
@@ -98,7 +103,10 @@
     <view class="list">
       <view class="item" @tap="gotoNewOrder">
         <text class="txt">我的预约</text>
-        <text class="count" wx:if="{{orderCount.unused && orderCount.unused != 0}}">{{orderCount.unused}}</text>
+        <text
+          class="count"
+          wx:if="{{orderCount.unused && orderCount.unused != 0}}"
+        >{{orderCount.unused}}</text>
         <wxc-icon size="25" class="icon" type="arrow-right" color="#5e5e5e"></wxc-icon>
       </view>
       <view class="item" @tap="gotoNewMoney">
@@ -120,102 +128,97 @@
         <wxc-icon size="25" class="icon" type="arrow-right" color="#5e5e5e"></wxc-icon>
       </view>
     </view>
-
   </view>
 </template>
 
 <script>
-  import wepy from 'wepy'
-  import auth from "../api/auth"
-  import user from '../api/user'
-  import QQMapWX from "../utils/qqmap-wx-jssdk"
-  import domTool from '../utils/domTool'
-  import order from '../api/order'
+import wepy from 'wepy';
+import auth from '../api/auth';
+import user from '../api/user';
+import QQMapWX from '../utils/qqmap-wx-jssdk';
+import domTool from '../utils/domTool';
+import order from '../api/order';
 
-  export default class Index extends wepy.page {
-    config = {
-      navigationBarTitleText: '个人中心',
-      usingComponents: {
-        'wxc-toast': '../../packages/@minui/wxc-toast/dist/index',
-        'wxc-icon': '../../packages/@minui/wxc-icon/dist/index',
-        'wxc-badge': '../../packages/@minui/wxc-badge/dist/index'
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: '个人中心',
+    usingComponents: {
+      'wxc-toast': '../../packages/@minui/wxc-toast/dist/index',
+      'wxc-icon': '../../packages/@minui/wxc-icon/dist/index',
+      'wxc-badge': '../../packages/@minui/wxc-badge/dist/index'
+    }
+  };
+
+  data = {
+    userInfo: '',
+    orderCount: '',
+    order: '',
+    titleImg:
+      'https://sec-cdn.static.xiaomi.net/secStatic/groups/miui-sec/rentianfu/spa-app/banner/banner1.jpg'
+  };
+
+  computed = {};
+
+  methods = {
+    // 拨打电话
+    makePhone() {
+      wepy.makePhoneCall({
+        phoneNumber: '18811419298'
+      });
+    },
+    // 去新页面
+    gotoNewPage() {
+      this.$navigate('userInfo', {});
+    },
+    // 我的余额度
+    gotoNewMoney() {
+      this.$navigate('money', {});
+    },
+    // 我的预约
+    gotoNewOrder() {
+      if (this.orderCount.total == '0') {
+        domTool.alert('暂无预约');
+      } else {
+        this.$navigate('order', { data: JSON.stringify(this.order) });
       }
     }
+  };
 
-    data = {
-      userInfo: '',
-      orderCount: '',
-      order: '',
-      titleImg: 'https://sec-cdn.static.xiaomi.net/secStatic/groups/miui-sec/rentianfu/spa-app/banner/banner1.jpg',
-    }
+  events = {};
 
-    computed = {
-
-    }
-
-    methods = {
-      // 拨打电话
-      makePhone() {
-        wepy.makePhoneCall({
-          phoneNumber: '18811419298'
-        })
-      },
-      // 去新页面
-      gotoNewPage() {
-        this.$navigate('userInfo', {})
-      },
-      // 我的余额度
-      gotoNewMoney() {
-        this.$navigate('money', {})
-      },
-      // 我的预约
-      gotoNewOrder() {
-        if(this.orderCount.total == '0') {
-          domTool.alert('暂无预约')
-        } else {
-          this.$navigate('order', {data: JSON.stringify(this.order)})
-        }
-      }
-    }
-
-    events = {
-
-    }
-
-    setdata(arr1,arr2) {
-      arr1.forEach((item,index)=>{
-        wepy.setStorageSync(item, arr2[index])
-      })
-    }
-
-    computedOrderCount(arr) {
-      var unused = 0;
-      var used = 0;
-      var total = arr.length;
-      arr.forEach(item=>{
-        if(!item.orderStatus) {
-          unused++;
-        } else {
-          used++;
-        }
-      })
-      return {unused,total}
-    }
-
-    async relData() {
-      this.userInfo = wepy.$instance.globalData.UserInfo.userInfo
-      this.$apply();
-      //渲染,  把关键数据存入 storage
-      let orderres = await order.findOrder()
-      this.order = orderres
-      this.orderCount = this.computedOrderCount(orderres)
-      this.$apply();
-    }
-
-    // 控制一下，unload 和 onshow 不要同时执行
-    onShow () {
-      this.relData()
-    }
-
+  setdata(arr1, arr2) {
+    arr1.forEach((item, index) => {
+      wepy.setStorageSync(item, arr2[index]);
+    });
   }
+
+  computedOrderCount(arr) {
+    var unused = 0;
+    var used = 0;
+    var total = arr.length;
+    arr.forEach(item => {
+      if (!item.orderStatus) {
+        unused++;
+      } else {
+        used++;
+      }
+    });
+    return { unused, total };
+  }
+
+  async relData() {
+    this.userInfo = wepy.$instance.globalData.UserInfo.userInfo;
+    this.$apply();
+    //渲染,  把关键数据存入 storage
+    let orderres = await order.findOrder();
+    this.order = orderres;
+    this.orderCount = this.computedOrderCount(orderres);
+    this.$apply();
+  }
+
+  // 控制一下，unload 和 onshow 不要同时执行
+  onShow() {
+    this.relData();
+  }
+}
 </script>

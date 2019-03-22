@@ -44,6 +44,7 @@ export default class extends wepy.app {
   globalData = {
     UserInfo: {},
     baseUrl: 'https://www.renwuming.cn/maidu',
+    // baseUrl: 'http://localhost:3000',
   };
 
   constructor() {

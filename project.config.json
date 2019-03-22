@@ -10,6 +10,6 @@
 	"compileType": "miniprogram",
 	"appid": "wxcc228a1ab706151b",
 	"projectname": "spa_pro",
-	"miniprogramRoot": "./dist",
+	"miniprogramRoot": "dist/",
 	"condition": {}
 }
